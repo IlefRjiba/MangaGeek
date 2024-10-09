@@ -1,0 +1,20 @@
+Prévu: 
+
+4.3 - association 1-N entre [inventaire] et [objet] '' ''
+4.4 -  (optionnel) OPTIONNEL (en 2ème moitié de projet) 
+
+
+6 création des pages du "front-office" de consultation des [inventaires]
+- consultation de la liste de tous les inventaires (dans un premier temps) OBLIGATOIRE TP 4
+- consultation d'une fiche d'[inventaire] à partir de la liste OBLIGATOIRE TP 4
+7 utilisation de gabarits pour les pages de consultation du front-office OBLIGATOIRE TP 5
+- consultation d'un [objet]
+- consultation de la liste des [objets] d'un [inventaire]
+- navigation d'un [inventaire] vers la consultation de ses [objets]
+8 intégration d'une mise en forme CSS avec Bootstrap dans les gabarits
+Twig
+
+
+
+* Ajouter la photo du manga à l'entité manga
+* Ajout des propriétés non-essentielles des mangas et mangashelfs

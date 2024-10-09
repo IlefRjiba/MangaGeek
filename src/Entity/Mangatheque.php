@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\GalerieRepository;
+use App\Repository\MangathequeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: GalerieRepository::class)]
-class Galerie
+#[ORM\Entity(repositoryClass: MangathequeRepository::class)]
+class Mangatheque
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

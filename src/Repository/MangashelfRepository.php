@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Inventaire;
+use App\Entity\Mangashelf;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Inventaire>
+ * @extends ServiceEntityRepository<Mangashelf>
  */
-class InventaireRepository extends ServiceEntityRepository
+class MangashelfRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Inventaire::class);
+        parent::__construct($registry, Mangashelf::class);
     }
 
 //    /**
-//     * @return Inventaire[] Returns an array of Inventaire objects
+//     * @return Mangashelf[] Returns an array of Mangashelf objects
 //     */
 //    public function findByExampleField($value): array
 //    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
+//        return $this->createQueryBuilder('m')
+//            ->andWhere('m.exampleField = :val')
 //            ->setParameter('val', $value)
-//            ->orderBy('i.id', 'ASC')
+//            ->orderBy('m.id', 'ASC')
 //            ->setMaxResults(10)
 //            ->getQuery()
 //            ->getResult()
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Inventaire
+//    public function findOneBySomeField($value): ?Mangashelf
 //    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
+//        return $this->createQueryBuilder('m')
+//            ->andWhere('m.exampleField = :val')
 //            ->setParameter('val', $value)
 //            ->getQuery()
 //            ->getOneOrNullResult()

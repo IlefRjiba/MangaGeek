@@ -1,3 +1,4 @@
+symfony console doctrine:database:create
 #!/usr/bin/env php
 <?php
 
