@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{# ... #} 
+  {% block body %}
+      <h1>mangashelf</h1>
+
+         {% dump mangashelf %}
+
+      <table class="table">
+          <tbody>
+              <tr>
+                  <th>Id</th>
+                  <td>{{ mangashelf.id }}</td>
+              </tr>
+              <tr>
+                  <th>mangashelf</th>
+                  <td>{{ mangashelf.name }}</td>
+              </tr>
+              ...
+          </tbody>
+      </table>
+
+
+  {% endblock %} {# body #} 
+{# ... #} 
