@@ -21,7 +21,7 @@ class Manga
 
     #[ORM\ManyToOne(inversedBy: 'mangas')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?mangashelf $mangashelf = null;
+    private ?Mangashelf $mangashelf = null;
 
     public function getId(): ?int
     {
@@ -52,12 +52,12 @@ class Manga
         return $this;
     }
 
-    public function getMangashelf(): ?mangashelf
+    public function getMangashelf(): ?Mangashelf
     {
         return $this->mangashelf;
     }
 
-    public function setMangashelf(?mangashelf $mangashelf): static
+    public function setMangashelf(?Mangashelf $mangashelf): static
     {
         $this->mangashelf = $mangashelf;
 

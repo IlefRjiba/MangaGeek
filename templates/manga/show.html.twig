@@ -1,25 +1,25 @@
 {% extends 'base.html.twig' %}
 {# ... #} 
   {% block body %}
-      <h1>mangashelf</h1>
-
-         {% dump mangashelf %}
+      <h1>Manga</h1>
 
       <table class="table">
           <tbody>
               <tr>
                   <th>Id</th>
-                  <td>{{ mangashelf.id }}</td>
+                  <td>{{ manga.id }}</td>
               </tr>
               <tr>
-                  <th>mangashelf</th>
-                  <td>{{ mangashelf.name }}</td>
+                  <th>manga</th>
+                  <td>{{ manga.name }}</td>
+              </tr>
+              <tr>
+                  <th>author</th>
+                  <td>{{ manga.author }}</td>
               </tr>
               ...
           </tbody>
       </table>
-
- <a href="{{ path('mangashelf_list') }}">back to list</a>
 
   {% endblock %} {# body #} 
 {# ... #} 

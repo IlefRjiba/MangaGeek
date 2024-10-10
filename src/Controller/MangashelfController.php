@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class MangashelfController extends AbstractController
 {
     
-    #[Route('/mangashelf', name: 'app_mangashelf', methods:['GET'] )]
+    #[Route('/mangashelf', name: 'mangashelf_list', methods:['GET'] )]
     public function listAction(ManagerRegistry $doctrine): Response
     {
         $entityManager= $doctrine->getManager();
