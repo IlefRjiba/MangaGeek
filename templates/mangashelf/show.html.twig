@@ -15,6 +15,17 @@
                   <th>mangashelf</th>
                   <td>{{ mangashelf.name }}</td>
               </tr>
+              <tr>
+                  <th>Mangas</th>
+                  <td>
+                  <ul>
+                  {%  for manga in mangashelf.mangas %}
+                  <li> <a href="{{ path('mangas_show', {'id': manga.id}) }}">{{ manga.Name }}</a> written by {{ manga.Author }}
+                  </li>
+                  {% endfor %} 
+                  </ul> 
+                  </td>
+              </tr>
               ...
           </tbody>
       </table>

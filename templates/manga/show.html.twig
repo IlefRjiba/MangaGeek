@@ -17,6 +17,10 @@
                   <th>author</th>
                   <td>{{ manga.author }}</td>
               </tr>
+              <tr>
+                  <th>Mangashelf</th>
+                  <td><a href="{{ path('mangashelf_show', {'id': manga.mangashelf.id}) }}">{{ manga.mangashelf.name }}</a></td>
+              </tr>
               ...
           </tbody>
       </table>
