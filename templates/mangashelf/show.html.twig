@@ -1,10 +1,9 @@
-{% extends 'base.html.twig' %}
-{# ... #} 
+
+{% extends 'mangalist.html.twig' %}
+
+
   {% block body %}
-      <h1>mangashelf</h1>
-
-         {% dump mangashelf %}
-
+      <h1>Mangashelf</h1>
       <table class="table">
           <tbody>
               <tr>
@@ -16,21 +15,17 @@
                   <td>{{ mangashelf.name }}</td>
               </tr>
               <tr>
-                  <th>Mangas</th>
+                  <th>Mangas:</th>
                   <td>
                   <ul>
-                  {%  for manga in mangashelf.mangas %}
-                  <li> <a href="{{ path('mangas_show', {'id': manga.id}) }}">{{ manga.Name }}</a> written by {{ manga.Author }}
-                  </li>
-                  {% endfor %} 
+                    {% block list %}
+                        {% include 'mangalist.html.twig' with {'items': mangashelf.mangas} %}
+                    {% endblock %}
                   </ul> 
                   </td>
               </tr>
-              ...
           </tbody>
       </table>
-
- <a href="{{ path('mangashelf_list') }}">back to list</a>
-
+    <a href="{{ path('mangashelf_list') }}">back to list</a>
   {% endblock %} {# body #} 
 {# ... #} 
