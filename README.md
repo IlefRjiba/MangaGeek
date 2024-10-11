@@ -22,3 +22,6 @@ Le site propose des routes web spécifiques pour accéder à différentes foncti
 - **Détails d'un Bookshelf** : http://127.0.0.1:8000/mangashelf/{id} offre une vue détaillée d'un mangashelf spécifique d'identifiant **id**
 
 - **Détails d'un Manga** : http://127.0.0.1:8000/manga/{id} met en avant les détails spécifiques d'un manga d'identifiant **id**
+
+## PS 
+Comme vous pouvez voir, le site est encore dans la zone de construction esthétique et pourrait faire peur à un manga d'horreur, mais sera transformé en un reve d'otaku dans le prochain futur :D
