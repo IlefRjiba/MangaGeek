@@ -40,7 +40,13 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Mangatheque>
      */
     #[ORM\OneToMany(targetEntity: Mangatheque::class, mappedBy: 'member')]
-    private Collection $Mangashelf;
+    private Collection $mangatheques;
+
+    #[ORM\Column(length: 255)]
+    private ?string $name = "default";
+
+    #[ORM\Column(length: 255)]
+    private ?string $surname = "default";
 
     public function __construct()
     {
@@ -126,6 +132,14 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->mangashelf;
     }
 
+    /**
+     * @return Collection<int, Mangatheque>
+     */
+    public function getMangatheques(): Collection
+    {
+        return $this->mangatheques;
+    }
+
     public function setMangashelf(Mangashelf $mangashelf): static
     {
         // set the owning side of the relation if necessary
@@ -138,24 +152,48 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function addMangashelf(Mangatheque $mangashelf): static
+    public function addMangatheque(Mangatheque $mangatheque): static
     {
-        if (!$this->Mangashelf->contains($mangashelf)) {
-            $this->Mangashelf->add($mangashelf);
-            $mangashelf->setMember($this);
+        if (!$this->mangatheques->contains($mangatheque)) {
+            $this->mangatheques->add($mangatheque);
+            $mangatheque->setMember($this);
         }
 
         return $this;
     }
 
-    public function removeMangashelf(Mangatheque $mangashelf): static
+    public function removeMangatheque(Mangatheque $mangatheque): static
     {
-        if ($this->Mangashelf->removeElement($mangashelf)) {
+        if ($this->mangatheques->removeElement($mangatheque)) {
             // set the owning side to null (unless already changed)
-            if ($mangashelf->getMember() === $this) {
-                $mangashelf->setMember(null);
+            if ($mangatheque->getMember() === $this) {
+                $mangatheque->setMember(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSurname(): ?string
+    {
+        return $this->surname;
+    }
+
+    public function setSurname(string $surname): static
+    {
+        $this->surname = $surname;
 
         return $this;
     }

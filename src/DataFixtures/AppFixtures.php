@@ -36,6 +36,8 @@ class AppFixtures extends Fixture
             $password = $this->hasher->hashPassword($user, $plainPassword);
             $user->setEmail($email);
             $user->setPassword($password);
+            $user->setName($faker->firstName);
+            $user->setSurname($faker->lastName);
 
             // $roles = array();
             // $roles[] = $role;
@@ -53,11 +55,29 @@ class AppFixtures extends Fixture
         foreach ($members as $member) {
             $mangashelf = new Mangashelf();
             $mangashelf->setName($faker->word . ' Shelf');
-            $mangashelf->setMembre($member); // Assign each Member a unique Mangashelf
+            // Assign each Member a unique Mangashelf
+            $mangashelf->setMembre($member);
 
             $manager->persist($mangashelf);
             $mangashelves[] = $mangashelf;
         }
+
+        //Mangatheque
+        $mangatheques=[];
+        for ($i = 0; $i < 5; $i++) {
+            $mangatheque = new Mangatheque();
+            $mangatheque->setName($faker->word . ' Mangatheque');
+            $mangatheque->setDescription($faker->sentence);
+
+            $mangatheque->setPubliee(true);
+            
+            $randomMember = $members[array_rand($members)];
+            $mangatheque->setMember($randomMember);
+            
+            $manager->persist($mangatheque);
+            $mangatheques[] = $mangatheque;
+        }
+        
 
         //Manga
         for ($i = 0; $i < 10; $i++) {
@@ -69,19 +89,15 @@ class AppFixtures extends Fixture
             $randomMangashelf = $mangashelves[array_rand($mangashelves)];
             $manga->setMangashelf($randomMangashelf);
 
+            //Association de chaque Manga à un ou plusieurs Mangatheque(s) aléatoire(s)
+            $randomMangatheques = $faker->randomElements($mangatheques, rand(1, 3));
+            foreach ($randomMangatheques as $mangatheque) {
+                $manga->addMangatheque($mangatheque);  // Assuming addMangatheque() method exists in Manga
+            }
+
             $manager->persist($manga);
         }
 
-        //Mangatheque
-        for ($i = 0; $i < 5; $i++) {
-            $mangatheque = new Mangatheque();
-            $mangatheque->setDescription($faker->sentence);
-
-            $mangatheque->setPubliee(true); 
-            
-            $manager->persist($mangatheque);
-        }
-        
 
         $manager->flush();
     }

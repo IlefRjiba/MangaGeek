@@ -18,12 +18,25 @@
                   <td>{{ manga.author }}</td>
               </tr>
               <tr>
-                  <th>Mangashelf</th>
-                  <td><a href="{{ path('mangashelf_show', {'id': manga.mangashelf.id}) }}">{{ manga.mangashelf.name }}</a></td>
+                  <th>Mangatheque(s)</th>
+                <td>
+                    <ul>
+                        {% for mangatheque in manga.mangatheques %}
+                            <li>
+                                <a href="{{ path('app_mangatheque_show', {'id': mangatheque.id}) }}">
+                                    {{ mangatheque.name }} (ID: {{ mangatheque.id }})
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
               </tr>
               ...
           </tbody>
       </table>
+
+      <h2>mangas</h2>
+
 
   {% endblock %} {# body #} 
 {# ... #} 

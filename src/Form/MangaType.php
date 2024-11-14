@@ -26,6 +26,9 @@ class MangaType extends AbstractType
                 'choice_label' => 'id',
                 'multiple' => true,
             ])
+            ->add('mangashelf', null, [
+                'disabled'=>true,
+                ])
         ;
     }
 

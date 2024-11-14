@@ -5,3 +5,4 @@ Prévu:
 * Continuer l'ajout d'un design de la liste de mangashelves avec le gabarit de bootstrap
 
 * gérer l’affichage des messages flash.
+* organiser les fixtures

@@ -30,6 +30,9 @@ class Mangatheque
     #[ORM\ManyToMany(targetEntity: Manga::class, inversedBy: 'mangatheques')]
     private Collection $mangas;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = "default name";
+
     public function __construct()
     {
         $this->mangas = new ArrayCollection();
@@ -103,6 +106,18 @@ class Mangatheque
     public function removeManga(Manga $manga): static
     {
         $this->mangas->removeElement($manga);
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }

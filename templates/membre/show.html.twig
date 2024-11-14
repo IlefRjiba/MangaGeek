@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Membre{% endblock %}
+
+{% block main %}
+    <h1>Membre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ member.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ member.name }}</td>
+            </tr>
+            <tr>
+                <th>Surname</th>
+                <td>{{ member.surname }}</td>
+            </tr>
+            <tr>
+                <th>email</th>
+                <td>{{ member.email }}</td>
+            </tr>
+            <tr>
+                <th>Inventaire</th>
+                <td><a href="{{ path('mangashelf_show', {'id' : member.Mangashelf.id}) }}">{{member.Mangashelf.name}}</a></td>
+            </tr>
+            <tr>
+                <th>Mangatheques</th>
+                <td>    
+                    {% for mangatheque in member.mangatheques %}
+                        <a href="{{ path('app_mangatheque_show', {'id': mangatheque.id}) }}">{{ mangatheque.description}} <br><br></a>
+                    {% else %}                         
+                        <td colspan="4">no records found</td>
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+        
+    </table>
+    <tr>
+
+    <a href="{{ path('app_membre')}}">Check members list</a>
+
+
+
+{% endblock %}

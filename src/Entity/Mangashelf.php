@@ -98,4 +98,11 @@ class Mangashelf
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        // Adjust the field here based on how you want the Mangashelf to be represented as a string.
+        return $this->name ?? 'Unnamed Mangashelf';
+    }
+
 }

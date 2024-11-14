@@ -3,26 +3,26 @@
 {% block title %}Manga index{% endblock %}
 
 {% block main %}
-    <h1>Manga index</h1>
+    <h1>Membre index</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Author</th>
-                <th>actions</th>
+                <th>Surname</th>
+                <th>Email</th>
             </tr>
         </thead>
         <tbody>
-        {% for manga in mangas %}
+        {% for member in members %}
             <tr>
-                <td>{{ manga.id }}</td>
-                <td>{{ manga.Name }}</td>
-                <td>{{ manga.Author }}</td>
+                <td>{{ member.id }}</td>
+                <td>{{ member.name }}</td>
+                <td>{{ member.surname }}</td>
+                <td>{{ member.email }}</td>
                 <td>
-                    <a href="{{ path('app_manga_show', {'id': manga.id}) }}">show</a>
-                    <a href="{{ path('app_manga_edit', {'id': manga.id}) }}">edit</a>
+                    <a href="{{ path('app_member_show', {'id': member.id}) }}">show</a>
                 </td>
             </tr>
         {% else %}
@@ -32,4 +32,5 @@
         {% endfor %}
         </tbody>
     </table>
+
 {% endblock %}

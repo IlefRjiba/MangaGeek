@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Manga;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 #[Route('/mangatheque')]
 final class MangathequeController extends AbstractController
@@ -85,21 +86,46 @@ final class MangathequeController extends AbstractController
     }
 
 
-        /**
-     * @param Integer $id
-     */
-    #[Route('/manga/{id}', name: 'app_mangatheque_manga_show', requirements: ['id' => '\d+'])]
-    public function mangaShow(ManagerRegistry $doctrine, $id) : Response
-    {
-            $mangaRepo = $doctrine->getRepository(Manga::class);
-            $manga = $mangaRepo->find($id);
+    //     /**
+    //  * @param Integer $id
+    //  */
+    // #[Route('/manga/{id}', name: 'app_mangatheque_manga_show', requirements: ['id' => '\d+'])]
+    // public function mangaShow(ManagerRegistry $doctrine, $id) : Response
+    // {
+    //         $mangaRepo = $doctrine->getRepository(Manga::class);
+    //         $manga = $mangaRepo->find($id);
 
-            if (!$manga) {
-                    throw $this->createNotFoundException('The manga does not exist');
-            }
+    //         if (!$manga) {
+    //                 throw $this->createNotFoundException('The manga does not exist');
+    //         }
 
-            return $this->render('manga/show.html.twig',
-            [ 'manga' => $manga ]);
+    //         return $this->render('mangatheque/mangaShow.html.twig',
+    //         [ 'manga' => $manga ]);
 
-    }
+    // }
+
+
+
+   #[Route('/{mangatheque_id}/manga/{manga_id}',
+           methods: ['GET'],
+           name: 'app_mangatheque_manga_show')]
+   public function mangaShow(
+                            #[MapEntity(id: 'mangatheque_id')] Mangatheque $mangatheque,
+                            #[MapEntity(id: 'manga_id')] Manga $manga
+                            ): Response
+   {
+    if(! $mangatheque->getMangas()->contains($manga)) {
+                throw $this->createNotFoundException("Couldn't find such a Manga in this Mangatheque !");
+        }
+
+        // if(! $[galerie]->isPublished()) {
+        //   throw $this->createAccessDeniedException("You cannot access the requested ressource!");
+        //}
+
+       return $this->render('mangatheque/mangaShow.html.twig', [
+           'manga' => $manga,
+           'mangatheque' => $mangatheque
+       ]);
+   }
+
 }

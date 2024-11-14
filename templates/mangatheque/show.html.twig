@@ -23,18 +23,19 @@
     </table>
     <tr>
     <th>Mangas</th>
-    <td>
-        <ul>
-          {% for manga in mangatheque.mangas %}
-          <li>
-            {{ manga.Name }}
-          </li>
-          {% endfor %}
-        </ul>
-    </td>
-</tr>
 
-
+<ul>
+   {% for manga in mangatheque.mangas %}
+   <li>
+     <a href="{{ path( 'app_mangatheque_manga_show',
+                       {
+                         'mangatheque_id': mangatheque.id,
+                         'manga_id' : manga.id
+                       }
+                     ) }}">{{ manga.name }}</a>
+   </li>
+   {% endfor %}
+</ul>
     <a href="{{ path('app_mangatheque_index') }}">back to list</a>
 
     <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}">edit</a>
