@@ -24,6 +24,10 @@ class Mangashelf
     #[ORM\OneToMany(targetEntity: Manga::class, mappedBy: 'mangashelf', orphanRemoval: true)]
     private Collection $mangas;
 
+    #[ORM\OneToOne(inversedBy: 'mangashelf', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Member $membre = null;
+
     public function __construct()
     {
         $this->mangas = new ArrayCollection();
@@ -79,6 +83,18 @@ class Mangashelf
                 $manga->setMangashelf(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMembre(): ?Member
+    {
+        return $this->membre;
+    }
+
+    public function setMembre(Member $membre): static
+    {
+        $this->membre = $membre;
 
         return $this;
     }

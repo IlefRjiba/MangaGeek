@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mangatheque{% endblock %}
+
+{% block main %}
+    <h1>Mangatheque</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ mangatheque.id }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ mangatheque.description }}</td>
+            </tr>
+            <tr>
+                <th>Publiee</th>
+                <td>{{ mangatheque.publiee ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <tr>
+    <th>Mangas</th>
+    <td>
+        <ul>
+          {% for manga in mangatheque.mangas %}
+          <li>
+            {{ manga.Name }}
+          </li>
+          {% endfor %}
+        </ul>
+    </td>
+</tr>
+
+
+    <a href="{{ path('app_mangatheque_index') }}">back to list</a>
+
+    <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}">edit</a>
+
+    {{ include('mangatheque/_delete_form.html.twig') }}
+{% endblock %}

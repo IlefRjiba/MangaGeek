@@ -3,3 +3,5 @@ Prévu:
 * Ajouter la photo du manga à l'entité manga
 * Ajout des propriétés non-essentielles des mangas et mangashelfs
 * Continuer l'ajout d'un design de la liste de mangashelves avec le gabarit de bootstrap
+
+* gérer l’affichage des messages flash.

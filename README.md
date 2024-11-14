@@ -6,19 +6,16 @@ Ce site web appelé MangaGeek et développé en utilisant Symfony offre une plat
 ## Structure du site:
 Le site est structuré autour des entités principales suivantes :
 - **Manga** : Identifié par un ID, chaque manga a un nom et un auteur.
-- **Bookshelf** (Inventaire) : Chaque utilisateur peut créer plusieurs bookshelves, chacun avec un ID et un nom.
+- **Mangashelf** (Inventaire) : Chaque utilisateur peut créer plusieurs bookshelves, chacun avec un ID et un nom.
 - **Mangathèque** (Galerie) : Un espace où tous les mangas sont exposés, accessible via un ID.
-- **Utilisateur** : Chaque utilisateur a un ID, username, mot de passe, et email.
+- **Member** : Chaque utilisateur a un ID, username, mot de passe, et email.
 
 Tous les attributs des entités mentionnés sont des string par défaut.
 
 ## Fonctionnalités et navigation:
 Le site propose des routes web spécifiques pour accéder à différentes fonctionnalités :
-* http://127.0.0.1:8000/mangashelf: liste tous les mangashelfs crées
-* http://127.0.0.1:8000/mangashelf/{id}: affiche les informations d'un mangashelf spécifique
-* http://127.0.0.1:8000/manga/{id}: affiche les informations d'un manga spécifique
 
-- **Accueil des Bookshelves** : http://127.0.0.1:8000/mangashelf affiche la liste de tous les bookshelves créés par l'utilisateur.
+- **Accueil des Bookshelves** : http://127.0.0.1:8000/mangashelf affiche la liste de tous les bookshelves.
 - **Détails d'un Bookshelf** : http://127.0.0.1:8000/mangashelf/{id} offre une vue détaillée d'un mangashelf spécifique d'identifiant **id**
 
 - **Détails d'un Manga** : http://127.0.0.1:8000/manga/{id} met en avant les détails spécifiques d'un manga d'identifiant **id**

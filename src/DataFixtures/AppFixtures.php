@@ -5,22 +5,55 @@ namespace App\DataFixtures;
 use App\Entity\Manga;
 use App\Entity\Mangashelf;
 use App\Entity\Mangatheque;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Entity\Member;
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $hasher;
+    public function __construct(UserPasswordHasherInterface $hasher)
+    {
+        $this->hasher = $hasher;
+    }
+
+    private function membersGenerator()
+    {
+        yield ['olivier@localhost','123456'];
+        yield ['slash@localhost','123456'];
+    }
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
 
+        //Member
+        $members = [];
+        foreach ($this->membersGenerator() as [$email, $plainPassword]) {
+            $user = new Member();
+            $password = $this->hasher->hashPassword($user, $plainPassword);
+            $user->setEmail($email);
+            $user->setPassword($password);
+
+            // $roles = array();
+            // $roles[] = $role;
+            // $user->setRoles($roles);
+
+            $manager->persist($user);
+            $members[] = $user;
+        }
+        
+        $manager->flush(); 
+
         //Mangashelf
         $mangashelves = [];
-        for ($i = 0; $i < 10; $i++) {
+
+        foreach ($members as $member) {
             $mangashelf = new Mangashelf();
-            $mangashelf->setName($faker->word . ' Shelf'); 
+            $mangashelf->setName($faker->word . ' Shelf');
+            $mangashelf->setMembre($member); // Assign each Member a unique Mangashelf
 
             $manager->persist($mangashelf);
             $mangashelves[] = $mangashelf;
@@ -42,19 +75,13 @@ class AppFixtures extends Fixture
         //Mangatheque
         for ($i = 0; $i < 5; $i++) {
             $mangatheque = new Mangatheque();
+            $mangatheque->setDescription($faker->sentence);
+
+            $mangatheque->setPubliee(true); 
             
             $manager->persist($mangatheque);
         }
-
-        //User
-        for ($i = 0; $i < 10; $i++) {
-            $user = new User();
-            $user->setUsername($faker->userName); 
-            $user->setMdp($faker->password);  
-            $user->setEmail($faker->email); 
-
-            $manager->persist($user);
-        }
+        
 
         $manager->flush();
     }

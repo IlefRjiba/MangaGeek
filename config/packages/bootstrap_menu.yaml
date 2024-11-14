@@ -1,0 +1,21 @@
+bootstrap_menu:
+  menus:
+    main:
+      items:
+        todos:
+          label: 'mangashelves'
+          route: 'mangashelf_list'
+    #     tags:
+    #       label: 'Tags'
+    #       route: 'tag_list' 
+    # anonymousaccount:
+    #   items:
+    #      login:
+    #         label: 'Login'
+    #         route: 'app_login'
+    # account:
+    #   items:
+    #      logout:
+    #         label: 'Logout'
+    #         route: 'app_logout'
+    #         roles: [ 'ROLE_USER' ]
