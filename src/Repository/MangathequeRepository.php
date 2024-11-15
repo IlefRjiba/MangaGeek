@@ -40,4 +40,10 @@ class MangathequeRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findPublicMangatheques(): array
+    {
+        return $this->findBy(['publiee' => true]);
+    }
+
 }

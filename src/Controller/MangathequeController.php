@@ -22,7 +22,7 @@ final class MangathequeController extends AbstractController
     public function index(MangathequeRepository $mangathequeRepository): Response
     {
         return $this->render('mangatheque/index.html.twig', [
-            'mangatheques' => $mangathequeRepository->findAll(),
+            'mangatheques' => $mangathequeRepository->findPublicMangatheques(),
         ]);
     }
 
