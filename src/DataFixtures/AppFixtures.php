@@ -10,8 +10,9 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\Member;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class AppFixtures extends Fixture
+class AppFixtures extends Fixture implements DependentFixtureInterface
 {
     private UserPasswordHasherInterface $hasher;
     public function __construct(UserPasswordHasherInterface $hasher)
@@ -25,42 +26,42 @@ class AppFixtures extends Fixture
         yield ['slash@localhost','123456'];
     }
 
+    public function getDependencies()
+        {
+                return [
+                        UserFixtures::class,
+                ];
+        }
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
 
-        //Member
-        $members = [];
-        foreach ($this->membersGenerator() as [$email, $plainPassword]) {
-            $user = new Member();
-            $password = $this->hasher->hashPassword($user, $plainPassword);
-            $user->setEmail($email);
-            $user->setPassword($password);
-            $user->setName($faker->firstName);
-            $user->setSurname($faker->lastName);
-
-            // $roles = array();
-            // $roles[] = $role;
-            // $user->setRoles($roles);
-
-            $manager->persist($user);
-            $members[] = $user;
-        }
-        
-        $manager->flush(); 
-
         //Mangashelf
         $mangashelves = [];
 
-        foreach ($members as $member) {
-            $mangashelf = new Mangashelf();
-            $mangashelf->setName($faker->word . ' Shelf');
-            // Assign each Member a unique Mangashelf
-            $mangashelf->setMembre($member);
-
-            $manager->persist($mangashelf);
-            $mangashelves[] = $mangashelf;
+        foreach (self::MangashelfDataGenerator() as [$name, $memberemail] ) {
+                $mangashelf = new Mangashelf();
+                if ($memberemail) {
+                        $member = $manager->getRepository(Mangashelf::class)->findOneByEmail($memberemail);
+                        $mangashelf->setMembre($member);
+                }
+                $mangashelf->setName($name);
+                $manager->persist($mangashelf);
         }
+        $manager->flush();
+        
+        
+
+        // foreach ($members as $member) {
+        //     $mangashelf = new Mangashelf();
+        //     $mangashelf->setName($faker->word . ' Shelf');
+        //     // Assign each Member a unique Mangashelf
+        //     $mangashelf->setMembre($member);
+
+        //     $manager->persist($mangashelf);
+        //     $mangashelves[] = $mangashelf;
+        // }
 
         //Mangatheque
         $mangatheques=[];

@@ -24,7 +24,7 @@
                         {% for mangatheque in manga.mangatheques %}
                             <li>
                                 <a href="{{ path('app_mangatheque_show', {'id': mangatheque.id}) }}">
-                                    {{ mangatheque.name }} (ID: {{ mangatheque.id }})
+                                    {{ mangatheque.name }}
                                 </a>
                             </li>
                         {% endfor %}
@@ -35,6 +35,7 @@
           </tbody>
       </table>
 
+<a href="{{ path('app_manga_edit', {'id': manga.id}) }}">edit</a>
 
   {% endblock %} {# body #} 
 {# ... #} 

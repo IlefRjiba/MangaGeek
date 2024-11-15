@@ -7,9 +7,7 @@
 
         {# <a href="{{ path('app_mangatheque_index') }}">back to list</a> #}
     <br>
-    <a class="btn mt-auto btn-sm btn-secondary" href="{{ path('app_member_show', {'id': mangatheque.member.id }) }}">back to member</a>
-    <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}" class="btn btn-warning btn-sm">edit</a>
-    {# {{ include('mangatheque/_delete_form.html.twig') }} #}
+
 
     <table class="table">
         <tbody>
@@ -64,5 +62,12 @@
         </div>
     </div>
 
-{# {{ include('mangatheque/_delete_form.html.twig') }} #}
+    <div class="text-center">
+    <a class="btn mt-auto btn-sm btn-secondary" href="{{ path('app_member_show', {'id': mangatheque.member.id }) }}">back to member</a>
+    <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}" class="btn btn-warning btn-sm">edit</a>
+    </div>
+    <br>
+    <div class="text-center">
+    {{ include('mangatheque/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

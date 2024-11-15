@@ -45,6 +45,9 @@
             </tr>
         </tbody>
     </table>
-    <a href="{{ path('app_manga_new', {'id': mangashelf.id}) }}">Add new</a>
-    <a href="{{ path('app_member_show', {'id': mangashelf.membre.id}) }}">back to member</a>
+
+    <div class="text-center">
+    <a class="btn btn-warning btn-sm" href="{{ path('app_manga_new', {'id': mangashelf.id}) }}">Add manga</a>
+    <a class="btn mt-auto btn-sm btn-secondary" href="{{ path('app_member_show', {'id': mangashelf.membre.id}) }}">back to member</a>
+    </div>
 {% endblock %}

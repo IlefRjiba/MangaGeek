@@ -25,7 +25,7 @@
             </tr>
             <tr>
                 <th>Mangashelf</th>
-                <td><a href="{{ path('mangashelf_show', {'id' : member.Mangashelf.id}) }}">{{ member.Mangashelf.name }}</a></td>
+                <td><a class="link-success" href="{{ path('mangashelf_show', {'id' : member.Mangashelf.id}) }}">{{ member.Mangashelf.name }}</a></td>
             </tr>
             <tr>
                 <th rowspan="{{ member.mangatheques|length + 1 }}">Mangatheques <br> <br>
@@ -39,17 +39,17 @@
                         <p class="fw-normal">{{ mangatheque.name }}</p>
                         <p class="fw-light">{{ mangatheque.description }}</p>
 
-                        <div class="text-center">
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        
                             <a class="btn btn-success btn-sm" href="{{ path('app_mangatheque_show', {'id': mangatheque.id}) }}">Consulter</a>
                             <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
                             <a href="{{ path('app_mangatheque_delete', {'id': mangatheque.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
                         </div>
-                        
 
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <a class="btn mt-auto btn-sm btn-secondary" href="{{ path('app_membre') }}">Check members list</a>
+    <a class="btn mt-auto btn-sm btn-light" href="{{ path('app_membre') }}">Liste des members</a>
 {% endblock %}

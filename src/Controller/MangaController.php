@@ -54,7 +54,8 @@ final class MangaController extends AbstractController
                                         ['id' => $manga->getMangashelf()->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        if(! $valid) {
+        if(! $valid && $submitted) {
+            $this->addFlash('error', 'Manga wasn\'t added');
             $errors = $form->getErrors(true);
     
             foreach($errors as $error) {
@@ -66,7 +67,7 @@ final class MangaController extends AbstractController
             }
         }
     
-        $this->addFlash('error', 'Manga wasn\'t added');
+        
         return $this->render('manga/new.html.twig', [
             'manga' => $manga,
             'form' => $form,
