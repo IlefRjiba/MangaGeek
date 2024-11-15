@@ -6,6 +6,7 @@ use App\Entity\Mangatheque;
 use App\Form\MangathequeType;
 use App\Repository\MangathequeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Member;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,10 +26,12 @@ final class MangathequeController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_mangatheque_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/mangatheque/new/{id}', name: 'app_mangatheque_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, Member $member): Response
     {
         $mangatheque = new Mangatheque();
+        $mangatheque->setMember($member);
+
         $form = $this->createForm(MangathequeType::class, $mangatheque);
         $form->handleRequest($request);
 
@@ -37,9 +40,9 @@ final class MangathequeController extends AbstractController
             $entityManager->flush();
 
             // Make sure message will be displayed after redirect
-            $this->addFlash('message', 'bien ajouté');
+            $this->addFlash('success', 'Nouvelle mangatheque ajoutée');
 
-            return $this->redirectToRoute('app_mangatheque_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_member_show', ['id'=> $member->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('mangatheque/new.html.twig', [
@@ -65,7 +68,8 @@ final class MangathequeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_mangatheque_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('warning', 'Mangatheque modifié');
+            return $this->redirectToRoute('app_member_show', ['id'=>$mangatheque->getMember()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('mangatheque/edit.html.twig', [
@@ -77,12 +81,14 @@ final class MangathequeController extends AbstractController
     #[Route('/{id}', name: 'app_mangatheque_delete', methods: ['POST'])]
     public function delete(Request $request, Mangatheque $mangatheque, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$mangatheque->getId(), $request->getPayload()->getString('_token'))) {
+        // if ($this->isCsrfTokenValid('delete'.$mangatheque->getId(), $request->getPayload()->getString('_token')))
+        if ($this->isCsrfTokenValid('delete'.$mangatheque->getId(), $request->request->get('_token'))) {
             $entityManager->remove($mangatheque);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_mangatheque_index', [], Response::HTTP_SEE_OTHER);
+        $this->addFlash('warning', 'Mangatheque supprimé');
+        return $this->redirectToRoute('app_member_show', ['id'=>$mangatheque->getMember()->getId()], Response::HTTP_SEE_OTHER);
     }
 
 

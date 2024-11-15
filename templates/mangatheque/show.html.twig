@@ -37,8 +37,12 @@
    {% endfor %}
 </ul>
     <a href="{{ path('app_mangatheque_index') }}">back to list</a>
+    <br>
+    <a href="{{ path('app_member_show', {'id': mangatheque.member.id }) }}">back to member</a>
 
-    <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}">edit</a>
+    <br><br>
+    <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}" class="btn btn-warning">edit</a>
+    <button class="btn btn-danger">Delete</button>
 
     {{ include('mangatheque/_delete_form.html.twig') }}
 {% endblock %}

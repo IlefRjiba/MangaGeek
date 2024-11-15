@@ -36,7 +36,7 @@ final class MangaController extends AbstractController
             $entityManager->persist($manga);
             $entityManager->flush();
 
-            $this->addFlash('success', 'New manga added');
+            $this->addFlash('success', 'Nouveau manga ajouté');
 
             return $this->redirectToRoute('mangashelf_show', 
                                         ['id' => $manga->getMangashelf()->getId()], Response::HTTP_SEE_OTHER);
