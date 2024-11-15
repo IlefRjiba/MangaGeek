@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Manga;
 use App\Entity\Mangashelf;
 use App\Entity\Mangatheque;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,15 +19,13 @@ class MangaType extends AbstractType
         $builder
             ->add('Name')
             ->add('Author')
-            ->add('mangashelf', EntityType::class, [
-                'class' => Mangashelf::class,
-                'choice_label' => 'id',
-            ])
             ->add('mangatheques', EntityType::class, [
                 'class' => Mangatheque::class,
                 'choice_label' => 'id',
                 'multiple' => true,
             ])
+            ->add('imageName', TextType::class,  ['disabled' => true])
+            ->add('imageFile', VichImageType::class, ['required' => false])
             ->add('mangashelf', null, [
                 'disabled'=>true,
                 ])

@@ -5,31 +5,37 @@
 {% block main %}
     <h1>Manga index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Author</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for manga in mangas %}
-            <tr>
-                <td>{{ manga.id }}</td>
-                <td>{{ manga.Name }}</td>
-                <td>{{ manga.Author }}</td>
-                <td>
-                    <a href="{{ path('app_manga_show', {'id': manga.id}) }}">show</a>
-                    <a href="{{ path('app_manga_edit', {'id': manga.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container px-4 px-lg-5 mt-3">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-start">
+                {% for item in mangas %}
+                <div class="col mb-4">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" 
+                                src="{{ vich_uploader_asset(item, 'imageFile') ?: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg' }}" 
+                                alt="Manga Image" />
+
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{ item.name }}</h5>
+                                <!-- Product author-->
+                                Written by: <b>{{ item.author }}</b>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                {# <a class="btn btn-outline-dark mt-auto" href="{{ path( 'app_mangatheque_manga_show', {
+                                    'mangatheque_id': mangatheque.id,
+                                    'manga_id' : item.id
+                                }) }}">See details</a> #}
+                                <a class="btn btn-info btn-outline-dark mt-auto" href="{{ path('app_manga_show', {'id': item.id}) }}">show</a>
+                                <a class="btn btn-warning btn-outline-dark mt-auto" href="{{ path('app_manga_edit', {'id': item.id}) }}">edit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
 {% endblock %}

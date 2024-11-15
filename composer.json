@@ -46,7 +46,8 @@
         "symfony/var-dumper": "6.4.*",
         "symfony/var-exporter": "6.4.*",
         "symfony/web-link": "6.4.*",
-        "symfony/yaml": "6.4.*"
+        "symfony/yaml": "6.4.*",
+        "vich/uploader-bundle": "^2.4"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.6",

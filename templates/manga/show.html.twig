@@ -19,6 +19,16 @@
                 <th>Author</th>
                 <td>{{ manga.Author }}</td>
             </tr>
+            <tr>
+                <th>Image</th>
+                <td>
+                    {% if manga.imageName %}
+                        <img src="{{ vich_uploader_asset(manga, 'imageFile') }}" alt="{{ manga.Name }}" style="max-width: 200px; max-height: 200px;">
+                    {% else %}
+                        <span>No image available</span>
+                    {% endif %}
+                </td>
+            </tr>
         </tbody>
     </table>
 

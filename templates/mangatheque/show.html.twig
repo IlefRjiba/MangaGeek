@@ -5,6 +5,12 @@
 {% block main %}
     <h1>Mangatheque</h1>
 
+        {# <a href="{{ path('app_mangatheque_index') }}">back to list</a> #}
+    <br>
+    <a class="btn mt-auto btn-sm btn-secondary" href="{{ path('app_member_show', {'id': mangatheque.member.id }) }}">back to member</a>
+    <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}" class="btn btn-warning btn-sm">edit</a>
+    {# {{ include('mangatheque/_delete_form.html.twig') }} #}
+
     <table class="table">
         <tbody>
             <tr>
@@ -21,28 +27,42 @@
             </tr>
         </tbody>
     </table>
-    <tr>
-    <th>Mangas</th>
 
-<ul>
-   {% for manga in mangatheque.mangas %}
-   <li>
-     <a href="{{ path( 'app_mangatheque_manga_show',
-                       {
-                         'mangatheque_id': mangatheque.id,
-                         'manga_id' : manga.id
-                       }
-                     ) }}">{{ manga.name }}</a>
-   </li>
-   {% endfor %}
-</ul>
-    <a href="{{ path('app_mangatheque_index') }}">back to list</a>
-    <br>
-    <a href="{{ path('app_member_show', {'id': mangatheque.member.id }) }}">back to member</a>
+    <h2>Mangas</h2>
 
-    <br><br>
-    <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}" class="btn btn-warning">edit</a>
-    <button class="btn btn-danger">Delete</button>
+    <div class="container px-4 px-lg-5 mt-3">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-start">
+            {% for item in mangatheque.mangas %}
+                <div class="col mb-4">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" 
+                                src="{{ vich_uploader_asset(item, 'imageFile') ?: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg' }}" 
+                                alt="Manga Image" />
 
-    {{ include('mangatheque/_delete_form.html.twig') }}
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{ item.name }}</h5>
+                                <!-- Product author-->
+                                Written by: <b>{{ item.author }}</b>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" href="{{ path( 'app_mangatheque_manga_show', {
+                                    'mangatheque_id': mangatheque.id,
+                                    'manga_id' : item.id
+                                }) }}">See details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{# {{ include('mangatheque/_delete_form.html.twig') }} #}
 {% endblock %}

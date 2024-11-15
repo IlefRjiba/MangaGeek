@@ -6,7 +6,6 @@ use App\Entity\Manga;
 use App\Form\MangaType;
 use App\Repository\MangaRepository;
 use Doctrine\ORM\EntityManagerInterface;
-// use Proxies\__CG__\App\Entity\Mangashelf;
 use App\Entity\Mangashelf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +23,7 @@ final class MangaController extends AbstractController
         ]);
     }
 
-    #[Route('/manga/new/{id}', name: 'app_manga_new', methods: ['GET', 'POST'])]
+    #[Route('/new/{id}', name: 'app_manga_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, Mangashelf $mangashelf): Response
     {
         $manga = new Manga();
@@ -32,7 +31,20 @@ final class MangaController extends AbstractController
         $form = $this->createForm(MangaType::class, $manga);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $valid=false;
+        $submitted=$form->isSubmitted();
+        dump($submitted);
+        if($submitted) {
+            $valid=$form->isValid();
+            dump($valid);
+        }
+
+        if ($submitted && $valid) {
+            // $imagefile = $manga->getImageFile();
+            //  if($imagefile) {
+            //          $mimetype = $imagefile->getMimeType();
+            //          $manga->setContentType($mimetype);
+            //  }
             $entityManager->persist($manga);
             $entityManager->flush();
 
@@ -42,6 +54,18 @@ final class MangaController extends AbstractController
                                         ['id' => $manga->getMangashelf()->getId()], Response::HTTP_SEE_OTHER);
         }
 
+        if(! $valid) {
+            $errors = $form->getErrors(true);
+    
+            foreach($errors as $error) {
+                dump($error);
+    
+                if($error instanceof FileUploadError) {
+                    $form->addError($error);
+                }
+            }
+        }
+    
         $this->addFlash('error', 'Manga wasn\'t added');
         return $this->render('manga/new.html.twig', [
             'manga' => $manga,
@@ -63,14 +87,20 @@ final class MangaController extends AbstractController
         $form = $this->createForm(MangaType::class, $manga);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()){ 
+            
+            if($form->isValid()) {
             $entityManager->flush();
 
             $this->addFlash('message', 'Manga updated successfully');
             return $this->redirectToRoute('app_manga_index', [], Response::HTTP_SEE_OTHER);
+                                }
+            
+            else{
+                $this->addFlash('error', 'Error in editing the manga');
+            }
         }
 
-        $this->addFlash('error', 'Error in editing the manga');
         return $this->render('manga/edit.html.twig', [
             'manga' => $manga,
             'form' => $form,
