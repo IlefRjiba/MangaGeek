@@ -6,4 +6,4 @@ Prévu:
 [✓] Gérer l’affichage des messages flash.
 [✓] Organiser les fixtures
 * créer un home pour le logout
-* formulaire de sign up : symfony console make:registration-form
+* étape 20
