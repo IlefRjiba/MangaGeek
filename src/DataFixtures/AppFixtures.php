@@ -20,12 +20,6 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
         $this->hasher = $hasher;
     }
 
-    private function membersGenerator()
-    {
-        yield ['olivier@localhost','123456'];
-        yield ['slash@localhost','123456'];
-    }
-
     public function getDependencies()
         {
                 return [
@@ -36,32 +30,21 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
+        // Fetch all members created in UserFixtures
+        $members = $manager->getRepository(Member::class)->findAll();
 
         //Mangashelf
-        $mangashelves = [];
+        $mangashelves = [];       
 
-        foreach (self::MangashelfDataGenerator() as [$name, $memberemail] ) {
-                $mangashelf = new Mangashelf();
-                if ($memberemail) {
-                        $member = $manager->getRepository(Mangashelf::class)->findOneByEmail($memberemail);
-                        $mangashelf->setMembre($member);
-                }
-                $mangashelf->setName($name);
-                $manager->persist($mangashelf);
+        foreach ($members as $member) {
+            $mangashelf = new Mangashelf();
+            $mangashelf->setName($faker->word . ' Shelf');
+            // Assign each Member a unique Mangashelf
+            $mangashelf->setMembre($member);
+
+            $manager->persist($mangashelf);
+            $mangashelves[] = $mangashelf;
         }
-        $manager->flush();
-        
-        
-
-        // foreach ($members as $member) {
-        //     $mangashelf = new Mangashelf();
-        //     $mangashelf->setName($faker->word . ' Shelf');
-        //     // Assign each Member a unique Mangashelf
-        //     $mangashelf->setMembre($member);
-
-        //     $manager->persist($mangashelf);
-        //     $mangashelves[] = $mangashelf;
-        // }
 
         //Mangatheque
         $mangatheques=[];
