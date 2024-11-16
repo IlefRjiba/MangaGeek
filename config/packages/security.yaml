@@ -16,6 +16,18 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            form_login:
+                    # "app_login" is the name of the route created previously
+                    login_path: app_login
+                    check_path: app_login
+                    enable_csrf: true
+                    default_target_path: redirect_after_login
+
+            logout:
+                    path: app_logout
+                    # where to redirect after logout
+                    target: app_login
+                    # target: home
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -25,9 +37,12 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+    role_hierarchy:
+            ROLE_ADMIN:       ROLE_USER
+            ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:

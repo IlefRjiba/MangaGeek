@@ -1,8 +1,9 @@
 Prévu: 
 
-* Ajouter la photo du manga à l'entité manga
+[✓] Ajouter la photo du manga à l'entité manga
 * Ajout des propriétés non-essentielles des mangas et mangashelfs
 * Continuer l'ajout d'un design de la liste de mangashelves avec le gabarit de bootstrap
-
-* gérer l’affichage des messages flash.
-* organiser les fixtures
+[✓] Gérer l’affichage des messages flash.
+[✓] Organiser les fixtures
+* créer un home pour le logout
+* formulaire de sign up : symfony console make:registration-form
