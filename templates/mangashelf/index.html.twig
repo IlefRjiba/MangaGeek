@@ -1,30 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MangashelfController!{% endblock %}
+{% block title %}Your Mangashelf{% endblock %}
 
 {% block main %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Mangashelf Details</h1>
 
-{% for mangashelf in mangashelves %}
-
-<table class="table">
-          <tbody>
-              <tr>
-                  <th>Id</th>
-                  <td>{{ mangashelf.id }} <a href="{{ path('mangashelf_show', {'id': mangashelf.id}) }}"> Plus de détails </a></td>
-              </tr>
-              <tr>
-                  <th>mangashelf</th>
-                  <td>{{ mangashelf.name }}</td>
-              </tr>
-              ...
-          </tbody>
-      </table>
-
-  {% endfor %}
-  
-</ul>
+    {% if mangashelf %}
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ mangashelf.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ mangashelf.name }}</td>
+                </tr>
+                <tr>
+                    <th>Mangas</th>
+                    <td>
+                        <ul>
+                            {% for manga in mangashelf.mangas %}
+                                <li>{{ manga.name }} by {{ manga.author }}</li>
+                            {% else %}
+                                <li>No mangas found in this shelf.</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <p>No Mangashelf found for the user.</p>
+    {% endif %}
 {% endblock %}
