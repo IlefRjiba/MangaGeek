@@ -18,11 +18,46 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 #[Route('/mangatheque')]
 final class MangathequeController extends AbstractController
 {
+    // #[Route('/all', name: 'app_mangatheque_index', methods: ['GET'])]
+    // public function index(MangathequeRepository $mangathequeRepository): Response
+    // {
+    //     return $this->render('mangatheque/index.html.twig', [
+    //         'mangatheques' => $mangathequeRepository->findPublicMangatheques(),
+    //     ]);
+    // }
+
     #[Route('/all', name: 'app_mangatheque_index', methods: ['GET'])]
     public function index(MangathequeRepository $mangathequeRepository): Response
     {
+        $mangatheques = [];
+        $user = $this->getUser();
+
+        if ($user) {
+            // Vérifier si l'utilisateur est administrateur
+            if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+                // Administrateur : accès à toutes les données
+                $mangatheques = $mangathequeRepository->findAll();
+            } else {
+                // Utilisateur normal : accès à ses mangatheques et à celles publiques
+                $publicMangatheques = $mangathequeRepository->findBy(['publiee' => true]);
+                $privateMangatheques = $mangathequeRepository->findBy([
+                    'publiee' => true,
+                    'member' => $user,
+                ]);
+                $mergedMangatheques = array_merge($publicMangatheques, $privateMangatheques);
+                // remove duplicates
+                $mangatheques = array_values(array_reduce($mergedMangatheques, function ($carry, $item) {
+                    $carry[$item->getId()] = $item; // Use ID as the key
+                    return $carry;
+                }, []));
+            }
+        } else {
+            // Non authentifié : accès uniquement aux galeries publiques
+            $mangatheques = $mangathequeRepository->findBy(['publiee' => true]);
+        }
+
         return $this->render('mangatheque/index.html.twig', [
-            'mangatheques' => $mangathequeRepository->findPublicMangatheques(),
+            'mangatheques' => $mangatheques,
         ]);
     }
 
