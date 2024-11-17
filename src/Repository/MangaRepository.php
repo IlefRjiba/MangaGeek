@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Manga;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Member;
 
 /**
  * @extends ServiceEntityRepository<Manga>
@@ -16,28 +17,18 @@ class MangaRepository extends ServiceEntityRepository
         parent::__construct($registry, Manga::class);
     }
 
-//    /**
-//     * @return Manga[] Returns an array of Manga objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Manga
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @return Manga[] Returns an array of Manga objects for a member
+     */
+    public function findMemberManga(Member $member): array
+    {
+            return $this->createQueryBuilder('o')
+                    ->leftJoin('o.mangashelf', 'i')
+                    ->andWhere('i.membre = :member')
+                    ->setParameter('member', $member)
+                    ->getQuery()
+                    ->getResult()
+            ;
+    }
+    
 }

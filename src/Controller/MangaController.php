@@ -15,11 +15,33 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/manga')]
 final class MangaController extends AbstractController
 {
+    // #[Route(name: 'app_manga_index', methods: ['GET'])]
+    // public function index(MangaRepository $mangaRepository): Response
+    // {
+    //     return $this->render('manga/index.html.twig', [
+    //         'mangas' => $mangaRepository->findAll(),
+    //     ]);
+    // }
+
     #[Route(name: 'app_manga_index', methods: ['GET'])]
     public function index(MangaRepository $mangaRepository): Response
     {
+        $mangas = [];
+        $user = $this->getUser();
+
+        if ($user) {
+            // Vérifier si l'utilisateur est administrateur
+            if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+                // Administrateur : accès à toutes les données
+                $mangas = $mangaRepository->findAll();
+            } else {
+                // Utilisateur normal
+                $member = $this->getUser();
+                $mangas = $mangaRepository->findMemberManga($member);
+                }
+                }
         return $this->render('manga/index.html.twig', [
-            'mangas' => $mangaRepository->findAll(),
+        'mangas' => $mangas,
         ]);
     }
 
