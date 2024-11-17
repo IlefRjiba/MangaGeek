@@ -43,7 +43,8 @@
                         
                             <a class="btn btn-success btn-sm" href="{{ path('app_mangatheque_show', {'id': mangatheque.id}) }}">Consulter</a>
                             <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
-                            <a href="{{ path('app_mangatheque_delete', {'id': mangatheque.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                            {{ include('//mangatheque//_delete_form.html.twig') }}
+
                         </div>
 
                 </tr>
