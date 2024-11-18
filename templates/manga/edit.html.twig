@@ -3,11 +3,25 @@
 {% block title %}Edit Manga{% endblock %}
 
 {% block main %}
-    <h1>Edit Manga</h1>
+        <h1 
+            class="text-center my-4 fw-bold" 
+            style="background: linear-gradient(90deg, #FF4500, #FFA500, #FFD700); 
+                -webkit-background-clip: text; 
+                color: transparent; 
+                font-family: 'Arial', sans-serif; 
+                text-transform: uppercase;">
+            <i class="bi bi-pencil-square"></i> Edit Manga
+        </h1>
+
 
     {{ include('manga/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_manga_index') }}">back to list</a>
+    <br>
 
+    <div class="text-center">
+    <a class="btn mt-auto btn-sm btn-secondary" href="{{ path('app_manga_show', {'id': manga.id }) }}">back to manga</a>
+    <br><br>
     {{ include('manga/_delete_form.html.twig') }}
+
+    </div>
 {% endblock %}

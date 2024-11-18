@@ -2,20 +2,27 @@ bootstrap_menu:
   menus:
     main:
       items:
-        todos:
-          label: 'mangashelves'
+        mangashelves:
+          label: 'Mangashelves list'
           route: 'mangashelf_list'
-    #     tags:
-    #       label: 'Tags'
-    #       route: 'tag_list' 
-    # anonymousaccount:
-    #   items:
-    #      login:
-    #         label: 'Login'
-    #         route: 'app_login'
-    # account:
-    #   items:
-    #      logout:
-    #         label: 'Logout'
-    #         route: 'app_logout'
-    #         roles: [ 'ROLE_USER' ]
+        admin_dashboard:
+          label: 'Users List'
+          route: 'app_membre'
+        login:
+          label: 'Login'
+          route: 'app_login'
+        logout:
+          label: 'Logout'
+          route: 'app_logout'
+        Mangashelf:
+          label: 'Mangashelf'
+          route: 'mangashelf_list'
+        Mangatheque:
+          label: 'Mangathèques'
+          route: 'app_mangatheque_index'
+        Mangas:
+          label: 'Mangas'
+          route: 'app_mangatheque_index'
+        Compte:
+          label: 'Members'
+          route: 'app_member_show'

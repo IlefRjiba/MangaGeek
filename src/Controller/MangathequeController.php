@@ -18,14 +18,6 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 #[Route('/mangatheque')]
 final class MangathequeController extends AbstractController
 {
-    // #[Route('/all', name: 'app_mangatheque_index', methods: ['GET'])]
-    // public function index(MangathequeRepository $mangathequeRepository): Response
-    // {
-    //     return $this->render('mangatheque/index.html.twig', [
-    //         'mangatheques' => $mangathequeRepository->findPublicMangatheques(),
-    //     ]);
-    // }
-
     #[Route('/all', name: 'app_mangatheque_index', methods: ['GET'])]
     public function index(MangathequeRepository $mangathequeRepository): Response
     {

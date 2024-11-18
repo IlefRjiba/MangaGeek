@@ -3,7 +3,12 @@
 {% block title %}Your Mangashelf{% endblock %}
 
 {% block main %}
-    <h1>Mangashelf Details</h1>
+    <h1 
+    class="text-center my-4 fw-bold" 
+    style="background: linear-gradient(90deg, #FF4500, #FFA500, #FFD700); -webkit-background-clip: text; color: transparent; font-family: 'Arial', sans-serif; text-transform: uppercase;">
+    <i class="bi bi-stack"></i> Mangashelf
+</h1>
+
 
     {% if mangashelf %}
         <table class="table">
@@ -20,11 +25,37 @@
                     <th>Mangas</th>
                     <td>
                         <ul>
-                            {% for manga in mangashelf.mangas %}
-                                <li>{{ manga.name }} by {{ manga.author }}</li>
-                            {% else %}
-                                <li>No mangas found in this shelf.</li>
-                            {% endfor %}
+                            <div class="container px-4 px-lg-5 mt-3">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for item in mangashelf.mangas %}
+                <div class="col mb-4">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" 
+                                src="{{ vich_uploader_asset(item, 'imageFile') ?: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg' }}" 
+                                alt="Manga Image" />
+
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{ item.name }}</h5>
+                                <!-- Product author-->
+                                Written by: <b>{{ item.author }}</b>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                {# <a class="btn btn-outline-dark mt-auto" href="#">See details</a> #}
+                                <a class="btn btn-outline-dark mt-auto" href="{{ path('app_manga_show', {'id': item.id}) }}">Manga details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
                         </ul>
                     </td>
                 </tr>

@@ -3,15 +3,28 @@
 {% block title %}Manga index{% endblock %}
 
 {% block main %}
-    <h1>Membre index</h1>
+    <h1 
+        class="text-center my-4 fw-bold" 
+        style="background: linear-gradient(90deg, #FF4500, #FFA500, #FFD700); -webkit-background-clip: text; color: transparent; font-family: 'Arial', sans-serif; text-transform: uppercase;">
+        <i class="bi bi-people-fill"></i> Members List
+    </h1>
+
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
+                <th>
+                    <i class="bi bi-person-badge"  style="color: orange;"></i> Id
+                </th>
+                <th>
+                    <i class="bi bi-person"  style="color: orange;"></i> Name
+                </th>
+                <th>
+                    <i class="bi bi-person-lines-fill"  style="color: orange;"></i> Surname
+                </th>
+                <th>
+                    <i class="bi bi-envelope"  style="color: orange;"></i> Email
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +35,9 @@
                 <td>{{ member.surname }}</td>
                 <td>{{ member.email }}</td>
                 <td>
-                    <a class="btn btn-outline-dark btn-sm" href="{{ path('app_member_show', {'id': member.id}) }}">show</a>
+                    <a class="btn btn-outline-dark btn-sm" href="{{ path('app_member_show', {'id': member.id}) }}">
+                        show
+                    </a>
                 </td>
             </tr>
         {% else %}

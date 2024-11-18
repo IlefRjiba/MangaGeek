@@ -15,14 +15,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/manga')]
 final class MangaController extends AbstractController
 {
-    // #[Route(name: 'app_manga_index', methods: ['GET'])]
-    // public function index(MangaRepository $mangaRepository): Response
-    // {
-    //     return $this->render('manga/index.html.twig', [
-    //         'mangas' => $mangaRepository->findAll(),
-    //     ]);
-    // }
-
     #[Route(name: 'app_manga_index', methods: ['GET'])]
     public function index(MangaRepository $mangaRepository): Response
     {
@@ -62,11 +54,6 @@ final class MangaController extends AbstractController
         }
 
         if ($submitted && $valid) {
-            // $imagefile = $manga->getImageFile();
-            //  if($imagefile) {
-            //          $mimetype = $imagefile->getMimeType();
-            //          $manga->setContentType($mimetype);
-            //  }
             $entityManager->persist($manga);
             $entityManager->flush();
 

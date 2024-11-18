@@ -3,8 +3,12 @@
 {% block title %}Mangatheque index{% endblock %}
 
 {% block main %}
-    <h1>Mangatheque index</h1>
- {# <a href="{{ path('app_mangatheque_new') }}">Create new</a> #}
+
+    <h1 
+        class="text-center my-4 fw-bold" 
+        style="background: linear-gradient(90deg, #FF4500, #FFA500, #FFD700); -webkit-background-clip: text; color: transparent; font-family: 'Arial', sans-serif; text-transform: uppercase;">
+        <i class="bi bi-book"></i> Mangathèques
+    </h1>
 
     <table class="table">
         <thead>
@@ -22,8 +26,9 @@
                 <td>{{ mangatheque.description }}</td>
                 <td>{{ mangatheque.publiee ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('app_mangatheque_show', {'id': mangatheque.id}) }}">show</a>
-                    <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}">edit</a>
+                    <a class="btn btn-outline-dark btn-sm" href="{{ path('app_mangatheque_show', {'id': mangatheque.id}) }}">show</a>
+                    <a class="btn btn-outline-success btn-sm" href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}">edit</a><td>
+                    
                 </td>
             </tr>
         {% else %}

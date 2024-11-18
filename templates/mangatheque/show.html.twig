@@ -3,9 +3,16 @@
 {% block title %}Mangatheque{% endblock %}
 
 {% block main %}
-    <h1>Mangatheque</h1>
+    <h1 
+    class="text-center my-4 fw-bold" 
+    style="background: linear-gradient(90deg, #FF4500, #FFA500, #FFD700); 
+           -webkit-background-clip: text; 
+           color: transparent; 
+           font-family: 'Arial', sans-serif; 
+           text-transform: uppercase;">
+    <i class="bi bi-journal-text"></i> Mangatheque Details
+</h1>
 
-        {# <a href="{{ path('app_mangatheque_index') }}">back to list</a> #}
     <br>
 
 
@@ -29,7 +36,7 @@
     <h2>Mangas</h2>
 
     <div class="container px-4 px-lg-5 mt-3">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-start">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {% for item in mangatheque.mangas %}
                 <div class="col mb-4">
                     <div class="card h-100">

@@ -3,7 +3,12 @@
 {% block title %}Membre{% endblock %}
 
 {% block main %}
-    <h1>Membre</h1>
+    <h1 
+    class="text-center my-4 fw-bold" 
+    style="background: linear-gradient(90deg, #FF4500, #FFA500, #FFD700); -webkit-background-clip: text; color: transparent; font-family: 'Arial', sans-serif; text-transform: uppercase;">
+    <i class="bi bi-person-circle"></i> Member Details
+</h1>
+
 
     <table class="table">
         <tbody>
@@ -52,5 +57,7 @@
         </tbody>
     </table>
 
+    {% if is_granted('ROLE_ADMIN') %}
     <a class="btn mt-auto btn-sm btn-light" href="{{ path('app_membre') }}">Liste des members</a>
+    {% endif %}
 {% endblock %}
