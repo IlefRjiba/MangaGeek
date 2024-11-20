@@ -22,20 +22,39 @@ final class MangaController extends AbstractController
         $user = $this->getUser();
 
         if ($user) {
-            // Vérifier si l'utilisateur est administrateur
-            if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
-                // Administrateur : accès à toutes les données
-                $mangas = $mangaRepository->findAll();
-            } else {
-                // Utilisateur normal
                 $member = $this->getUser();
                 $mangas = $mangaRepository->findMemberManga($member);
                 }
-                }
+                
         return $this->render('manga/index.html.twig', [
         'mangas' => $mangas,
         ]);
     }
+
+    #[Route('/all',name: 'app_manga_all', methods: ['GET'])]
+    public function ListMangas(MangaRepository $mangaRepository): Response
+    {
+        $mangas = [];
+        $user = $this->getUser();
+
+        if ($user) {
+            if ($this->isGranted('ROLE_ADMIN')) {
+                // Admin: Fetch all mangas
+                $mangas = $mangaRepository->findAll();
+            } else {
+                // Regular User: Fetch mangas associated with their Mangashelf
+                $mangashelf = $user->getMangashelf();
+                if ($mangashelf) {
+                    $mangas = $mangaRepository->findBy(['mangashelf' => $mangashelf]);
+                }
+            }
+        }
+
+        return $this->render('manga/all.html.twig', [
+            'mangas' => $mangas,
+        ]);
+    }
+
 
     #[Route('/new/{id}', name: 'app_manga_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, Mangashelf $mangashelf): Response

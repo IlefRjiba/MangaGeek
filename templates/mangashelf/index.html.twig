@@ -1,67 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Your Mangashelf{% endblock %}
+{% block title %}Mangashelves index{% endblock %}
 
 {% block main %}
+
     <h1 
-    class="text-center my-4 fw-bold" 
-    style="background: linear-gradient(90deg, #FF4500, #FFA500, #FFD700); -webkit-background-clip: text; color: transparent; font-family: 'Arial', sans-serif; text-transform: uppercase;">
-    <i class="bi bi-stack"></i> Mangashelf
-</h1>
+        class="text-center my-4 fw-bold" 
+        style="background: linear-gradient(90deg, #FF4500, #FFA500, #FFD700); -webkit-background-clip: text; color: transparent; font-family: 'Arial', sans-serif; text-transform: uppercase;">
+        <i class="bi bi-collection"></i> Mangashelves
+    </h1>
 
-
-    {% if mangashelf %}
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ mangashelf.id }}</td>
-                </tr>
-                <tr>
-                    <th>Name</th>
-                    <td>{{ mangashelf.name }}</td>
-                </tr>
-                <tr>
-                    <th>Mangas</th>
-                    <td>
-                        <ul>
-                            <div class="container px-4 px-lg-5 mt-3">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            {% for item in mangashelf.mangas %}
-                <div class="col mb-4">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" 
-                                src="{{ vich_uploader_asset(item, 'imageFile') ?: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg' }}" 
-                                alt="Manga Image" />
-
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">{{ item.name }}</h5>
-                                <!-- Product author-->
-                                Written by: <b>{{ item.author }}</b>
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center">
-                                {# <a class="btn btn-outline-dark mt-auto" href="#">See details</a> #}
-                                <a class="btn btn-outline-dark mt-auto" href="{{ path('app_manga_show', {'id': item.id}) }}">Manga details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-                        </ul>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    {% else %}
-        <p>No Mangashelf found for the user.</p>
-    {% endif %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Mangas</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mangashelf in mangashelves %}
+            <tr>
+                <td>{{ mangashelf.id }}</td>
+                <td>
+                    <strong>{{ mangashelf.name }}</strong>
+                </td>
+                <td>
+                    <ul>
+                        {% for manga in mangashelf.mangas %}
+                            <li>
+                                <span style="font-style: italic; color: gray;">
+                                    {{ manga.name }} by {{ manga.author }}
+                                </span>
+                            </li>
+                        {% else %}
+                            <li class="text-muted">No mangas in this shelf.</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <a class="btn btn-outline-dark btn-sm" href="{{ path('mangashelf_show', {'id': mangashelf.id}) }}">show</a>
+                    <a class="btn btn-outline-success btn-sm" href="{{ path('app_manga_new', {'id': mangashelf.id}) }}">Add Manga</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No Mangashelves found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

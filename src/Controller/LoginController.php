@@ -43,4 +43,11 @@ class LoginController extends AbstractController
         // throw new \Exception('Don\'t forget to activate logout in security.yaml');
         return new Response();
     }
+
+    #[Route('/', name: 'home')]
+    public function home(): Response
+    {
+        return $this->render('home.html.twig');
+    }
+
 }

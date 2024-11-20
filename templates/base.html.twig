@@ -29,13 +29,22 @@
               font-size: 0.85rem;
               white-space: nowrap;
             }
+            body {
+            margin: 0;
+
+            background-color: #ffffff;
+            opacity: 1;
+            background-image:  radial-gradient(#f7a145 0.5px, transparent 0.5px), radial-gradient(#f7a145 0.5px, #ffffff 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0,10px 10px;
+        }
         </style>
 
         
     </head>
     <body>
         {% block menu %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        {# <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container px-4 px-lg-5">
               <a class="navbar-brand" href="#">Mangageek</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -49,10 +58,10 @@
                               <a class="nav-link" href="{{ path('mangashelf_show',{'id':app.user.mangashelf.id}) }}">My Mangashelf</a>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="{{ path('app_mangatheque_mine') }}">My Mangatheque</a>
+                              <a class="nav-link" href="{{ path('app_mangatheque_mine') }}">My Mangatheques</a>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="{{ path('app_mangatheque_index') }}">Liste des Mangathèques</a>
+                              <a class="nav-link" href="{{ path('app_mangatheque_parcour') }}">Parcourir Mangatheques</a>
                           </li>
                       {% else %}
                           <li class="nav-item">
@@ -63,7 +72,9 @@
                    {% if app.user %}
                     {% if is_granted('ROLE_ADMIN') %}
                         <a class="nav-link me-3 text-secondary" href="{{ path('app_membre') }}">Members' List</a>
-                        <a class="nav-link me-3 text-secondary" href="{{ path('mangashelf_list') }}">Mangashelves List</a>
+                        <a class="nav-link me-3 text-secondary" href="{{ path('app_manga_all') }}">Mangas List</a>
+                        <a class="nav-link me-3 text-secondary" href="{{ path('mangashelf_index') }}">Mangashelves List</a>
+                        <a class="nav-link me-3 text-secondary" href="{{ path('app_mangatheque_index') }}">Mangatheques List</a>
                     {% endif %}
                     <div class="d-flex align-items-center">
                         <a class="nav-link me-4 account" href="{{ path('app_member_show', {'id': app.user.id}) }}">
@@ -76,7 +87,81 @@
                 {% endif %}
               </div>
           </div>
-      </nav>
+      </nav> #}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid px-4 px-lg-5">
+        <a class="navbar-brand" href="#">Mangageek</a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_manga_index') }}">My Mangas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('mangashelf_show', {'id': app.user.mangashelf.id}) }}">My Mangashelf</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_mangatheque_mine') }}">My Mangatheques</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_mangatheque_parcour') }}">Browse Mangatheques</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+            {% if app.user %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <!-- Admin Dropdown -->
+                    <div class="dropdown">
+                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Admin Actions
+          </a>
+                        <ul class="dropdown-menu" aria-labelledby="adminMenuDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_membre') }}">Members' List</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_manga_all') }}">Mangas List</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('mangashelf_index') }}">Mangashelves List</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_mangatheque_index') }}">Mangatheques List</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+                <!-- User Account and Logout -->
+                <div class="d-flex align-items-center ms-3">
+                    <a class="nav-link account" href="{{ path('app_member_show', {'id': app.user.id}) }}">
+                        <i class="bi bi-person-circle"></i>
+                    </a>
+                    <a class="nav-link logout-tooltip" href="{{ path('app_logout') }}">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+
         {% endblock %}
         {% block body %}
             <div class="container body-container">

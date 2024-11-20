@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mangatheque index{% endblock %}
+{% block title %}Mangatheque Index{% endblock %}
 
 {% block main %}
 
@@ -13,17 +13,16 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nom</th>
                 <th>Description</th>
                 <th>Publiee</th>
+                <th>Owner</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for mangatheque in mangatheques %}
             <tr>
-                <td>{{ mangatheque.id }}</td>
                 <td>
                     <strong>{{ mangatheque.name }}</strong>
                 </td>
@@ -34,13 +33,22 @@
                 </td>
                 <td>{{ mangatheque.publiee ? 'Yes' : 'No' }}</td>
                 <td>
+                    {% if app.user and mangatheque.member == app.user %}
+                        <span class="badge bg-success">Mine</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{{ mangatheque.member.name }}</span>
+                    {% endif %}
+                </td>
+                <td>
                     <a class="btn btn-outline-dark btn-sm" href="{{ path('app_mangatheque_show', {'id': mangatheque.id}) }}">show</a>
-                    <a class="btn btn-outline-success btn-sm" href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}">edit</a>
+                    {% if app.user and mangatheque.member == app.user %}
+                        <a class="btn btn-outline-success btn-sm" href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="6">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

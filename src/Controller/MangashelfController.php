@@ -22,7 +22,7 @@ public function listAction(ManagerRegistry $doctrine): Response
 
         // Check if the user has an associated Mangashelf
         if ($mangashelf) {
-            return $this->render('mangashelf/index.html.twig', [
+            return $this->render('mangashelf/show.html.twig', [
                 'mangashelf' => $mangashelf, // Pass the single Mangashelf object
             ]);
         }
@@ -32,54 +32,24 @@ public function listAction(ManagerRegistry $doctrine): Response
     return $this->redirectToRoute('home'); // Redirect if no Mangashelf is found
 }
 
-#[Route('/mangashelf/all', name: 'mangashelf_all', methods: ['GET'])]
+#[Route('/mangashelf/all', name: 'mangashelf_index', methods: ['GET'])]
 public function listMangashelves(ManagerRegistry $doctrine): Response
-{
-    $member = $this->getUser();
+{    $user = $this->getUser();
 
-    if ($member) {
-        $mangashelf = $member->getMangashelf();
+        // Check if the user has the admin role
+        if ($user && $this->isGranted('ROLE_ADMIN')) {
+            $entityManager = $doctrine->getManager();
+            $mangashelves = $entityManager->getRepository(Mangashelf::class)->findAll();
 
-        // Check if the user has an associated Mangashelf
-        if ($mangashelf) {
             return $this->render('mangashelf/index.html.twig', [
-                'mangashelf' => $mangashelf, // Pass the single Mangashelf object
+                'mangashelves' => $mangashelves, // Pass all Mangashelves for admin
             ]);
         }
-    }
 
-    $this->addFlash('error', 'No inventory found for the user.');
-    return $this->redirectToRoute('home'); // Redirect if no Mangashelf is found
+        $this->addFlash('error', 'Access denied.');
+        return $this->redirectToRoute('home'); // Redirect non-admin users
 }
 
-    // #[Route('/mangashelf', name: 'mangashelf_list', methods:['GET'] )]
-    // public function listAction(ManagerRegistry $doctrine): Response
-    // {
-    //     $member = $this->getUser();
-    //     $mangashelf = $member->getMangashelf();
-
-    //     // $entityManager= $doctrine->getManager();
-    //     // $mangashelfs = $entityManager->getRepository(Mangashelf::class)->findAll();
-
-    //     return $this->render('mangashelf/index.html.twig', [
-    //         'controller_name' => 'MangashelfController',
-    //         "mangashelves" => $mangashelf,
-    //     ]);
-
-        // $member = $this->getUser();
-
-        // if ($member) {
-        //     $mangashelf = $member->getMangashelf();
-
-        //     return $this->render('mangashelf/index.html.twig', [
-        //         'controller_name' => 'MangashelfController',
-        //         'mangashelves' => $mangashelves,
-        //     ]);
-        // }
-
-        // $this->addFlash('error', 'No inventory found for the user.');
-        // return $this->redirectToRoute('home');
-    
 
 
     /**
