@@ -49,31 +49,44 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             'Shōnen Épique' => [
                 "description" => "Un lieu où l'on revit les batailles épiques des plus grands héros. Chaque étagère raconte une histoire de courage, d'amitié et de dépassement de soi.",
                 "mangas" => [
-                    'L’Attaque des Titans', 'My Hero Academia', 'One Piece', 'Naruto',
+                    'L’Attaque des Titans',
+                    'My Hero Academia',
+                    'One Piece',
+                    'Naruto',
                 ],
             ],
             'Seinen Dramatique' => [
                 "description" => "Une collection sombre et intense pour les amateurs de récits profonds et réalistes qui explorent les émotions humaines.",
                 "mangas" => [
-                    'Death Note', 'Tokyo Revengers', 'Jujutsu Kaisen', 'Chainsaw Man',
+                    'Death Note',
+                    'Tokyo Revengers',
+                    'Jujutsu Kaisen',
+                    'Chainsaw Man',
                 ],
             ],
             'Fantasy Épique' => [
                 "description" => "Traversez des mondes magiques où dragons, chevaliers et quêtes épiques prennent vie.",
                 "mangas" => [
-                    'Fairy Tail', 'Black Clover', 'Bleach', 'Demon Slayer',
+                    'Fairy Tail',
+                    'Black Clover',
+                    'Bleach',
+                    'Demon Slayer',
                 ],
             ],
             'Horreur et Suspense' => [
                 "description" => "Un espace mystérieux où chaque recoin est rempli de récits qui vous tiendront éveillés toute la nuit.",
                 "mangas" => [
-                    'Chainsaw Man', 'Death Note', 'Jujutsu Kaisen',
+                    'Chainsaw Man',
+                    'Death Note',
+                    'Jujutsu Kaisen',
                 ],
             ],
             'Science-fiction et Cyberpunk' => [
                 "description" => "Un univers futuriste où la technologie et l'imagination ne connaissent pas de limites.",
                 "mangas" => [
-                    'Sword Art Online', 'Hunter x Hunter', 'Fullmetal Alchemist',
+                    'Sword Art Online',
+                    'Hunter x Hunter',
+                    'Fullmetal Alchemist',
                 ],
             ],
         ];

@@ -1,54 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mangashelves index{% endblock %}
+{% block title %}Mangashelves index
+{% endblock %}
 
 {% block main %}
 
-    <h1 
-        class="text-center my-4 fw-bold" 
-        style="background: linear-gradient(90deg, #FF4500, #FFA500, #FFD700); -webkit-background-clip: text; color: transparent; font-family: 'Arial', sans-serif; text-transform: uppercase;">
-        <i class="bi bi-collection"></i> Mangashelves
-    </h1>
+	<h1 class="text-center my-4 fw-bold" style="background: linear-gradient(90deg, #FF4500, #FFA500, #FFD700); -webkit-background-clip: text; color: transparent; font-family: 'Arial', sans-serif; text-transform: uppercase;">
+		<i class="bi bi-collection"></i>
+		Mangashelves
+	</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Mangas</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for mangashelf in mangashelves %}
-            <tr>
-                <td>{{ mangashelf.id }}</td>
-                <td>
-                    <strong>{{ mangashelf.name }}</strong>
-                </td>
-                <td>
-                    <ul>
-                        {% for manga in mangashelf.mangas %}
-                            <li>
-                                <span style="font-style: italic; color: gray;">
-                                    {{ manga.name }} by {{ manga.author }}
-                                </span>
-                            </li>
-                        {% else %}
-                            <li class="text-muted">No mangas in this shelf.</li>
-                        {% endfor %}
-                    </ul>
-                </td>
-                <td>
-                    <a class="btn btn-outline-dark btn-sm" href="{{ path('mangashelf_show', {'id': mangashelf.id}) }}">show</a>
-                    <a class="btn btn-outline-success btn-sm" href="{{ path('app_manga_new', {'id': mangashelf.id}) }}">Add Manga</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">No Mangashelves found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom</th>
+				<th>Mangas</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for mangashelf in mangashelves %}
+				<tr>
+					<td>{{ mangashelf.id }}</td>
+					<td>
+						<strong>{{ mangashelf.name }}</strong>
+					</td>
+					<td>
+						<ul>
+							{% for manga in mangashelf.mangas %}
+								<li>
+									<span style="font-style: italic; color: gray;">
+										{{ manga.name }}
+										by
+										{{ manga.author }}
+									</span>
+								</li>
+							{% else %}
+								<li class="text-muted">No mangas in this shelf.</li>
+							{% endfor %}
+						</ul>
+					</td>
+					<td>
+						<a class="btn btn-outline-dark btn-sm" href="{{ path('mangashelf_show', {'id': mangashelf.id}) }}">show</a>
+						<a class="btn btn-outline-success btn-sm" href="{{ path('app_manga_new', {'id': mangashelf.id}) }}">Add Manga</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">No Mangashelves found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}

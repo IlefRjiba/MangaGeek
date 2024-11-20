@@ -16,7 +16,7 @@ class MarquePageRepository extends ServiceEntityRepository
         parent::__construct($registry, MarquePage::class);
     }
 
-//    /**
+    //    /**
 //     * @return MarquePage[] Returns an array of MarquePage objects
 //     */
 //    public function findByExampleField($value): array
@@ -31,7 +31,7 @@ class MarquePageRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?MarquePage
+    //    public function findOneBySomeField($value): ?MarquePage
 //    {
 //        return $this->createQueryBuilder('m')
 //            ->andWhere('m.exampleField = :val')

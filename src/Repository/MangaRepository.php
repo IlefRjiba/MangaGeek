@@ -22,13 +22,13 @@ class MangaRepository extends ServiceEntityRepository
      */
     public function findMemberManga(Member $member): array
     {
-            return $this->createQueryBuilder('o')
-                    ->leftJoin('o.mangashelf', 'i')
-                    ->andWhere('i.membre = :member')
-                    ->setParameter('member', $member)
-                    ->getQuery()
-                    ->getResult()
-            ;
+        return $this->createQueryBuilder('o')
+            ->leftJoin('o.mangashelf', 'i')
+            ->andWhere('i.membre = :member')
+            ->setParameter('member', $member)
+            ->getQuery()
+            ->getResult()
+        ;
     }
-    
+
 }

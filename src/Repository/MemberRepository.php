@@ -33,7 +33,7 @@ class MemberRepository extends ServiceEntityRepository implements PasswordUpgrad
         $this->getEntityManager()->flush();
     }
 
-//    /**
+    //    /**
 //     * @return Member[] Returns an array of Member objects
 //     */
 //    public function findByExampleField($value): array
@@ -48,7 +48,7 @@ class MemberRepository extends ServiceEntityRepository implements PasswordUpgrad
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Member
+    //    public function findOneBySomeField($value): ?Member
 //    {
 //        return $this->createQueryBuilder('m')
 //            ->andWhere('m.exampleField = :val')

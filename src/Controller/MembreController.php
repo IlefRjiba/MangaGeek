@@ -15,7 +15,7 @@ class MembreController extends AbstractController
     {
         return $this->render('membre/index.html.twig', [
             'controller_name' => 'MembreController',
-            'members'=> $MemberRepository->findAll(),
+            'members' => $MemberRepository->findAll(),
         ]);
     }
 

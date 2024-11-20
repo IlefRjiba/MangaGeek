@@ -43,8 +43,7 @@ final class MangathequeController extends AbstractController
                     return $carry;
                 }, []));
             }
-        }
-        else {
+        } else {
             // Non authentifié : accès uniquement aux galeries publiques
             $mangatheques = $mangathequeRepository->findBy(['publiee' => true]);
         }
@@ -123,7 +122,7 @@ final class MangathequeController extends AbstractController
             // Make sure message will be displayed after redirect
             $this->addFlash('success', 'Nouvelle mangatheque ajoutée');
 
-            return $this->redirectToRoute('app_member_show', ['id'=> $member->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_member_show', ['id' => $member->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('mangatheque/new.html.twig', [
@@ -150,7 +149,7 @@ final class MangathequeController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('warning', 'Mangatheque modifié');
-            return $this->redirectToRoute('app_member_show', ['id'=>$mangatheque->getMember()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_member_show', ['id' => $mangatheque->getMember()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('mangatheque/edit.html.twig', [
@@ -163,31 +162,30 @@ final class MangathequeController extends AbstractController
     public function delete(Request $request, Mangatheque $mangatheque, EntityManagerInterface $entityManager): Response
     {
         // if ($this->isCsrfTokenValid('delete'.$mangatheque->getId(), $request->getPayload()->getString('_token')))
-        if ($this->isCsrfTokenValid('delete'.$mangatheque->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $mangatheque->getId(), $request->request->get('_token'))) {
             $entityManager->remove($mangatheque);
             $entityManager->flush();
         }
 
         $this->addFlash('warning', 'Mangatheque supprimé');
-        return $this->redirectToRoute('app_member_show', ['id'=>$mangatheque->getMember()->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_member_show', ['id' => $mangatheque->getMember()->getId()], Response::HTTP_SEE_OTHER);
     }
 
-   #[Route('/{mangatheque_id}/manga/{manga_id}',
-           methods: ['GET'],
-           name: 'app_mangatheque_manga_show')]
-   public function mangaShow(
-                            #[MapEntity(id: 'mangatheque_id')] Mangatheque $mangatheque,
-                            #[MapEntity(id: 'manga_id')] Manga $manga
-                            ): Response
-   {
-    if(! $mangatheque->getMangas()->contains($manga)) {
-                throw $this->createNotFoundException("Couldn't find such a Manga in this Mangatheque !");
+    #[Route('/{mangatheque_id}/manga/{manga_id}',
+        methods: ['GET'],
+        name: 'app_mangatheque_manga_show')]
+    public function mangaShow(
+        #[MapEntity(id: 'mangatheque_id')] Mangatheque $mangatheque,
+        #[MapEntity(id: 'manga_id')] Manga $manga
+    ): Response {
+        if (!$mangatheque->getMangas()->contains($manga)) {
+            throw $this->createNotFoundException("Couldn't find such a Manga in this Mangatheque !");
         }
 
-       return $this->render('mangatheque/mangaShow.html.twig', [
-           'manga' => $manga,
-           'mangatheque' => $mangatheque
-       ]);
-   }
+        return $this->render('mangatheque/mangaShow.html.twig', [
+            'manga' => $manga,
+            'mangatheque' => $mangatheque
+        ]);
+    }
 
 }

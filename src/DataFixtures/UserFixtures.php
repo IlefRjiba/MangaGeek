@@ -26,12 +26,12 @@ class UserFixtures extends Fixture
     {
         $faker = Factory::create();
 
-        foreach ($this->getUserData() as [$email,$plainPassword,$role]) {
+        foreach ($this->getUserData() as [$email, $plainPassword, $role]) {
             $user = new Member();
             $password = $this->hasher->hashPassword($user, $plainPassword);
             $user->setEmail($email);
             $user->setPassword($password);
-            
+
             $user->setName($faker->firstName);
             $user->setSurname($faker->lastName);
 

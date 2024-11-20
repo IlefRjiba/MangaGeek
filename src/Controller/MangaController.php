@@ -22,16 +22,16 @@ final class MangaController extends AbstractController
         $user = $this->getUser();
 
         if ($user) {
-                $member = $this->getUser();
-                $mangas = $mangaRepository->findMemberManga($member);
-                }
-                
+            $member = $this->getUser();
+            $mangas = $mangaRepository->findMemberManga($member);
+        }
+
         return $this->render('manga/index.html.twig', [
-        'mangas' => $mangas,
+            'mangas' => $mangas,
         ]);
     }
 
-    #[Route('/all',name: 'app_manga_all', methods: ['GET'])]
+    #[Route('/all', name: 'app_manga_all', methods: ['GET'])]
     public function ListMangas(MangaRepository $mangaRepository): Response
     {
         $mangas = [];
@@ -64,11 +64,11 @@ final class MangaController extends AbstractController
         $form = $this->createForm(MangaType::class, $manga);
         $form->handleRequest($request);
 
-        $valid=false;
-        $submitted=$form->isSubmitted();
+        $valid = false;
+        $submitted = $form->isSubmitted();
         dump($submitted);
-        if($submitted) {
-            $valid=$form->isValid();
+        if ($submitted) {
+            $valid = $form->isValid();
             dump($valid);
         }
 
@@ -78,24 +78,27 @@ final class MangaController extends AbstractController
 
             $this->addFlash('success', 'Nouveau manga ajouté');
 
-            return $this->redirectToRoute('mangashelf_show', 
-                                        ['id' => $manga->getMangashelf()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(
+                'mangashelf_show',
+                ['id' => $manga->getMangashelf()->getId()],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
-        if(! $valid && $submitted) {
+        if (!$valid && $submitted) {
             $this->addFlash('error', 'Manga wasn\'t added');
             $errors = $form->getErrors(true);
-    
-            foreach($errors as $error) {
+
+            foreach ($errors as $error) {
                 dump($error);
-    
-                if($error instanceof FileUploadError) {
+
+                if ($error instanceof FileUploadError) {
                     $form->addError($error);
                 }
             }
         }
-    
-        
+
+
         return $this->render('manga/new.html.twig', [
             'manga' => $manga,
             'form' => $form,
@@ -116,16 +119,14 @@ final class MangaController extends AbstractController
         $form = $this->createForm(MangaType::class, $manga);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()){ 
-            
-            if($form->isValid()) {
-            $entityManager->flush();
+        if ($form->isSubmitted()) {
 
-            $this->addFlash('message', 'Manga updated successfully');
-            return $this->redirectToRoute('app_manga_index', [], Response::HTTP_SEE_OTHER);
-                                }
-            
-            else{
+            if ($form->isValid()) {
+                $entityManager->flush();
+
+                $this->addFlash('message', 'Manga updated successfully');
+                return $this->redirectToRoute('app_manga_index', [], Response::HTTP_SEE_OTHER);
+            } else {
                 $this->addFlash('error', 'Error in editing the manga');
             }
         }
@@ -139,7 +140,7 @@ final class MangaController extends AbstractController
     #[Route('/{id}', name: 'app_manga_delete', methods: ['POST'])]
     public function delete(Request $request, Manga $manga, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$manga->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $manga->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($manga);
             $entityManager->flush();
         }
