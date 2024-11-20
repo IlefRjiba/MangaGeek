@@ -17,25 +17,30 @@
                 <th>Nom</th>
                 <th>Description</th>
                 <th>Publiee</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for mangatheque in mangatheques %}
             <tr>
                 <td>{{ mangatheque.id }}</td>
-                <td>{{ mangatheque.name }}</td>
-                <td>{{ mangatheque.description }}</td>
+                <td>
+                    <strong>{{ mangatheque.name }}</strong>
+                </td>
+                <td>
+                    <span style="font-style: italic; color: gray;">
+                        {{ mangatheque.description }}
+                    </span>
+                </td>
                 <td>{{ mangatheque.publiee ? 'Yes' : 'No' }}</td>
                 <td>
                     <a class="btn btn-outline-dark btn-sm" href="{{ path('app_mangatheque_show', {'id': mangatheque.id}) }}">show</a>
-                    <a class="btn btn-outline-success btn-sm" href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}">edit</a><td>
-                    
+                    <a class="btn btn-outline-success btn-sm" href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

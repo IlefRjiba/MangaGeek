@@ -53,6 +53,24 @@ final class MangathequeController extends AbstractController
         ]);
     }
 
+    #[Route('/mine', name: 'app_mangatheque_mine', methods: ['GET'])]
+    public function mine(MangathequeRepository $mangathequeRepository): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            $this->addFlash('error', 'Vous devez être connecté pour accéder à vos mangathèques.');
+            return $this->redirectToRoute('app_login'); // Redirection vers la page de connexion
+        }
+
+        // Récupérer uniquement les mangathèques de l'utilisateur connecté
+        $mangatheques = $mangathequeRepository->findBy(['member' => $user]);
+
+        return $this->render('mangatheque/index.html.twig', [
+            'mangatheques' => $mangatheques,
+        ]);
+    }
+
     #[Route('/mangatheque/new/{id}', name: 'app_mangatheque_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, Member $member): Response
     {

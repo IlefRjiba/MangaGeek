@@ -3,9 +3,23 @@
 {% block title %}New Manga{% endblock %}
 
 {% block main %}
-    <h1>Create new Manga</h1>
+    <h1 
+        class="text-center my-4 fw-bold" 
+        style="background: linear-gradient(90deg, #FF4500, #FFA500, #FFD700); 
+            -webkit-background-clip: text; 
+            color: transparent; 
+            font-family: 'Arial', sans-serif; 
+            text-transform: uppercase;">
+        <i class="bi bi-pencil"></i> Create New Manga
+    </h1>
+
 
     {{ include('manga/_form.html.twig') }}
 
-    <a href="{{ path('app_manga_index') }}">back to list</a>
+    <br>
+
+    <div class="text-center">
+    <a class="btn btn mt-auto btn-sm btn-secondary" href="{{ path('mangashelf_show', {'id': app.user.mangashelf.id}) }}">My Mangashelf</a>
+    <a class="btn btn mt-auto btn-sm  btn-outline-dark" href="{{ path('app_manga_index') }}">My Mangas list</a>
+    </div>
 {% endblock %}

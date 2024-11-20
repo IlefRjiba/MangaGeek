@@ -42,24 +42,17 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                       {% if app.user %}
-                        {% if is_granted('ROLE_ADMIN') %}
-                              <li class="nav-item">
-                                  <a class="nav-link" href="{{ path('app_membre') }}">Members' List</a>
-                              </li>
-                              <li class="nav-item">
-                              <a class="nav-link" href="{{ path('mangashelf_list') }}">Mangashelves List</a>
-                              </li>
-                          {% endif %}
-                        {% if not is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_manga_index') }}">My Mangas</a>
+                        </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="{{ path('mangashelf_list') }}">Mangashelf</a>
-                          </li>
-                        {% endif %}
-                          <li class="nav-item">
-                              <a class="nav-link" href="{{ path('app_mangatheque_index') }}">Mangathèques</a>
+                              <a class="nav-link" href="{{ path('mangashelf_show',{'id':app.user.mangashelf.id}) }}">My Mangashelf</a>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="{{ path('app_manga_index') }}">Mangas</a>
+                              <a class="nav-link" href="{{ path('app_mangatheque_mine') }}">My Mangatheque</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{{ path('app_mangatheque_index') }}">Liste des Mangathèques</a>
                           </li>
                       {% else %}
                           <li class="nav-item">
@@ -68,15 +61,19 @@
                       {% endif %}
                   </ul>
                    {% if app.user %}
-                      <div class="d-flex align-items-center">
-                          <a class="nav-link me-2 account" href="{{ path('app_member_show', {'id': app.user.id}) }}">
-                              <i class="bi bi-person-circle"></i>
-                          </a>
-                          <a class="nav-link logout-tooltip" href="{{ path('app_logout') }}">
-                              <i class="bi bi-box-arrow-right"></i>
-                          </a>
-                      </div>
-                  {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="nav-link me-3 text-secondary" href="{{ path('app_membre') }}">Members' List</a>
+                        <a class="nav-link me-3 text-secondary" href="{{ path('mangashelf_list') }}">Mangashelves List</a>
+                    {% endif %}
+                    <div class="d-flex align-items-center">
+                        <a class="nav-link me-4 account" href="{{ path('app_member_show', {'id': app.user.id}) }}">
+                            <i class="bi bi-person-circle"></i>
+                        </a>
+                        <a class="nav-link logout-tooltip" href="{{ path('app_logout') }}">
+                            <i class="bi bi-box-arrow-right"></i>
+                        </a>
+                    </div>
+                {% endif %}
               </div>
           </div>
       </nav>

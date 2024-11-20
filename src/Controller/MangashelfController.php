@@ -32,6 +32,26 @@ public function listAction(ManagerRegistry $doctrine): Response
     return $this->redirectToRoute('home'); // Redirect if no Mangashelf is found
 }
 
+#[Route('/mangashelf/all', name: 'mangashelf_all', methods: ['GET'])]
+public function listMangashelves(ManagerRegistry $doctrine): Response
+{
+    $member = $this->getUser();
+
+    if ($member) {
+        $mangashelf = $member->getMangashelf();
+
+        // Check if the user has an associated Mangashelf
+        if ($mangashelf) {
+            return $this->render('mangashelf/index.html.twig', [
+                'mangashelf' => $mangashelf, // Pass the single Mangashelf object
+            ]);
+        }
+    }
+
+    $this->addFlash('error', 'No inventory found for the user.');
+    return $this->redirectToRoute('home'); // Redirect if no Mangashelf is found
+}
+
     // #[Route('/mangashelf', name: 'mangashelf_list', methods:['GET'] )]
     // public function listAction(ManagerRegistry $doctrine): Response
     // {
