@@ -40,7 +40,9 @@
 	<div class="text-center">
 		<a class="btn mt-auto btn-sm btn-secondary" href="{{ path('app_manga_index') }}">back to list</a>
 
-		<a class="btn btn-warning btn-sm" href="{{ path('app_manga_edit', {'id': manga.id}) }}">edit</a>
+		{% if manga.mangashelf.membre == app.user %}
+			<a class="btn btn-warning btn-sm" href="{{ path('app_manga_edit', {'id': manga.id}) }}">edit</a>
+		{% endif %}
 		<br><br>
 	</div>
 
