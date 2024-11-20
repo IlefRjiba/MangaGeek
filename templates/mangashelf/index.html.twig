@@ -24,7 +24,16 @@
 				<tr>
 					<td>{{ mangashelf.id }}</td>
 					<td>
-						<strong>{{ mangashelf.name }}</strong>
+						<strong>{{ mangashelf.name }}
+							<br>
+							{% if mangashelf.membre == app.user %}
+								<p class="badge rounded-pill bg-success">My Mangashelf</p>
+							{% else %}
+								<p class="badge rounded-pill bg-dark">Owner:
+									<b>{{ mangashelf.membre.name }}</b>
+								</p>
+							{% endif %}
+						</strong>
 					</td>
 					<td>
 						<ul>
@@ -43,7 +52,9 @@
 					</td>
 					<td>
 						<a class="btn btn-outline-dark btn-sm" href="{{ path('mangashelf_show', {'id': mangashelf.id}) }}">show</a>
-						<a class="btn btn-outline-success btn-sm" href="{{ path('app_manga_new', {'id': mangashelf.id}) }}">Add Manga</a>
+						{% if mangashelf.membre == app.user %}
+							<a class="btn btn-outline-success btn-sm" href="{{ path('app_manga_new', {'id': mangashelf.id}) }}">Add Manga</a>
+						{% endif %}
 					</td>
 				</tr>
 			{% else %}

@@ -142,6 +142,11 @@ final class MangathequeController extends AbstractController
     #[Route('/{id}/edit', name: 'app_mangatheque_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Mangatheque $mangatheque, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        if ($mangatheque->getMember() !== $user) {
+            $this->addFlash('error', 'You do not own this Mangatheque.');
+            return $this->redirectToRoute('app_mangatheque_show', ['id' => $mangatheque->getId()]);
+        }
         $form = $this->createForm(MangathequeType::class, $mangatheque);
         $form->handleRequest($request);
 
@@ -149,7 +154,7 @@ final class MangathequeController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('warning', 'Mangatheque modifié');
-            return $this->redirectToRoute('app_member_show', ['id' => $mangatheque->getMember()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_mangatheque_show', ['id' => $mangatheque->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('mangatheque/edit.html.twig', [
@@ -161,7 +166,12 @@ final class MangathequeController extends AbstractController
     #[Route('/{id}', name: 'app_mangatheque_delete', methods: ['POST'])]
     public function delete(Request $request, Mangatheque $mangatheque, EntityManagerInterface $entityManager): Response
     {
-        // if ($this->isCsrfTokenValid('delete'.$mangatheque->getId(), $request->getPayload()->getString('_token')))
+        $user = $this->getUser();
+        if ($mangatheque->getMember() !== $user) {
+            $this->addFlash('error', 'You do not own this Mangatheque.');
+            return $this->redirectToRoute('app_mangatheque_show', ['id' => $mangatheque->getId()]);
+        }
+
         if ($this->isCsrfTokenValid('delete' . $mangatheque->getId(), $request->request->get('_token'))) {
             $entityManager->remove($mangatheque);
             $entityManager->flush();

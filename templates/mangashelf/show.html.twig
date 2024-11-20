@@ -7,7 +7,10 @@
 			            font-family: 'Arial', sans-serif;
 			            text-transform: uppercase;">
 		<i class="bi bi-journal"></i>
-		My Mangashelf Details
+		{% if mangashelf.membre == app.user  %} My Mangashelf Details 
+        {% else %}
+            Mangashelf details
+        {% endif %}
 	</h1>
 
 	<table class="table">
@@ -54,7 +57,9 @@
 	</table>
 
 	<div class="text-center">
+		{% if mangashelf.membre == app.user %}
 		<a class="btn btn-warning btn-sm" href="{{ path('app_manga_new', {'id': mangashelf.id}) }}">Add manga</a>
+		{% endif %}
 		<a class="btn mt-auto btn-sm btn-secondary" href="{{ path('app_member_show', {'id': mangashelf.membre.id}) }}">back to member</a>
 	</div>
 {% endblock %}

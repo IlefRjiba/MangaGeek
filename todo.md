@@ -1,29 +1,13 @@
-Prévu: 
-
-[✓] Ajouter la photo du manga à l'entité manga
-[✓] Ajout des images des mangas
-[✓] Continuer l'ajout d'un design de la liste de mangashelves avec le gabarit de bootstrap
-[✓] Gérer l’affichage des messages flash.
-[✓] Organiser les fixtures
-[✓] Mettre les liens de retour à jour
-[✓] Mettre la navbar à jour
-[] Mettre le Readme.md à jour
-
-* mangashelf see details button
-* ajouter manga dans mangashelf
-* page in new window
-* Compléter les mécanismes de suppression de données (optionnel)
-
 | N° étape | Tâche à faire                                                                 | Obligatoire/Optionel | Séance de début prévisionnel | État   |
 |----------|------------------------------------------------------------------------------|-----------------------|-----------------------------|--------|
 | 1        | prise de connaissance du **cahier des charges**                              | OBLIGATOIRE           | TP 3                        | ✔      |
 | 2        | initialisation du projet Symfony                                            | OBLIGATOIRE           | TP 3                        | ✔      |
 | 3        | gestion du code source avec Git                                             | RECOMMANDÉ            |                             | ✔      |
-| 4        | ajout au modèle des données des entités liées [**inventaire**] et [**objet**] animales | OBLIGATOIRE           | TP 3                        | ✔      |
+| 4        | ajout au modèle des données des entités liées Mangashelf et Manga animales | OBLIGATOIRE           | TP 3                        | ✔      |
 | 4.1      | - entité Mangashelf                                                      | "                     | "                           | ✔      |
 | 4.2      | - entité Manga                                                            | "                     | "                           | ✔      |
 | 4.3      | - association 1-N entre Mangashelf et Manga                             | "                     | "                           | ✔      |
-| 4.4      | - propriétés non-essentielles des Manga (optionnel)                       | OPTIONNEL             | (en 2ème moitié de projet) |        |
+| 4.4      | - propriétés non-essentielles des Manga (optionnel)                       | OPTIONNEL             | (en 2ème moitié de projet) |    ✔    |
 | 5        | ajout de données de tests chargeables avec les **fixtures**                 | OBLIGATOIRE           | TP 3                        | ✔      |
 | 5.1      | - pour Mangashelf                                                        | "                     | "                           | ✔      |
 | 5.2      | - pour Manga                                                             | "                     | "                           | ✔      |
@@ -51,5 +35,5 @@ Prévu:
 | 21       | ajout d’un Manga d’une Mangatheque à une Mangatheque                         | OPTIONNEL             |                             |        |
 | 22       | utilisation des messages flash pour les CRUDs                               | OPTIONNEL             |                             |    ✔    |
 | 23       | ajout d’une gestion des messages d’erreur dans le front-office             | OPTIONNEL             | TP 8                        |   ✔     |
-| 24       | protection de l’accès aux données à leurs seuls propriétaires              | OPTIONNEL             |                             |        |
+| 24       | protection de l’accès aux données à leurs seuls propriétaires              | OPTIONNEL             |                             |   ✔     |
 | 25       | contextualisation du chargement des données en fonction de l’utilisateur connecté | OPTIONNEL             |                             |    ✔    |

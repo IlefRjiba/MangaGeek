@@ -19,7 +19,7 @@ class MembreController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_member_show', methods: ['GET'])]
+    #[Route('account/{id}', name: 'app_member_show', methods: ['GET'])]
     public function show(Member $member): Response
     {
         return $this->render('membre/show.html.twig', [

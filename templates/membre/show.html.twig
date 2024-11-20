@@ -32,12 +32,18 @@
                 <th>Mangashelf</th>
                 <td><a class="link-success" href="{{ path('mangashelf_show', {'id' : member.Mangashelf.id}) }}">{{ member.Mangashelf.name }}</a></td>
             </tr>
+            
             <tr>
                 <th rowspan="{{ member.mangatheques|length + 1 }}">Mangatheques <br> <br>
-                    <a class="btn mt-auto btn-sm btn-secondary" href="{{ path('app_mangatheque_new', {'id': member.id}) }}">Nouvelle mangatheque</a>
+                {% if member == app.user %}
+                    <a class="btn mt-auto btn-sm btn-secondary" href="{{ path('app_mangatheque_new', {'id': member.id}) }}">New Mangatheque</a>
+                {% endif %} 
                 </th>
 
             </tr>
+            
+            
+            
             {% for mangatheque in member.mangatheques|filter(m => m.publiee) %}
                 <tr>
                     <td>
@@ -46,10 +52,11 @@
 
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                         
-                            <a class="btn btn-success btn-sm" href="{{ path('app_mangatheque_show', {'id': mangatheque.id}) }}">Consulter</a>
-                            <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            <a class="btn btn-success btn-sm" href="{{ path('app_mangatheque_show', {'id': mangatheque.id}) }}">See details</a>
+                            {% if member == app.user %}
+                            <a href="{{ path('app_mangatheque_edit', {'id': mangatheque.id}) }}" class="btn btn-warning btn-sm">Edit</a>
                             {{ include('//mangatheque//_delete_form.html.twig') }}
-
+{% endif %} 
                         </div>
 
                 </tr>
@@ -58,6 +65,6 @@
     </table>
 
     {% if is_granted('ROLE_ADMIN') %}
-    <a class="btn mt-auto btn-sm btn-light" href="{{ path('app_membre') }}">Liste des members</a>
+    <a class="btn mt-auto btn-sm btn-light" href="{{ path('app_membre') }}">Members list</a>
     {% endif %}
 {% endblock %}
