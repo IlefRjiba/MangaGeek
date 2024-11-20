@@ -8,19 +8,11 @@ use App\Entity\Mangatheque;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use App\Entity\Member;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class AppFixtures extends Fixture implements DependentFixtureInterface
 {
-    private UserPasswordHasherInterface $hasher;
-
-    public function __construct(UserPasswordHasherInterface $hasher)
-    {
-        $this->hasher = $hasher;
-    }
-
     public function getDependencies()
     {
         return [
@@ -32,43 +24,62 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
-        // Genres de mangas pour les Mangashelves
-        $mangashelfNames = [
-            'Shōnen Action', 'Romance Shōjo', 'Seinen Dramatique',
-            'Fantasy Épique', 'Mystère et Suspense', 'Comédie Slice of Life',
+        // Préparer les chemins des images
+        $imagePath = __DIR__ . '/../../public/uploads/mangas';
+        $imageMapping = [
+            'L’Attaque des Titans' => 'aot.png',
+            'Black Clover' => 'black clover.jpg',
+            'Bleach' => 'bleach.jpg',
+            'Chainsaw Man' => 'chainsaw.jpg',
+            'Death Note' => 'deathNote.jpg',
+            'Fairy Tail' => 'fairytail.jpg',
+            'Fullmetal Alchemist' => 'fmalchemist.jpg',
+            'Hunter x Hunter' => 'hxh.jpg',
+            'Jujutsu Kaisen' => 'jjk.jpg',
+            'Demon Slayer' => 'kny.jpg',
+            'My Hero Academia' => 'mha.jpg',
+            'Naruto' => 'naruto.jpg',
+            'One Piece' => 'one piece.jpg',
+            'Sword Art Online' => 'swa.jpg',
+            'Tokyo Revengers' => 'tokyo-revengers.jpg',
         ];
 
         // Thèmes ou collections pour les Mangathèques
-        $mangathequeNames = [
-            'Classiques du Manga', 'Mangas Récompensés', 
-            'Nouveautés de la Semaine', 'Horreur et Paranormal',
-            'Sci-Fi et Cyberpunk', 'Adaptations Anime',
-        ];
-
-        // Noms de mangas inspirés
-        $mangaNames = [
-            'L’Attaque des Titans', 'One Piece', 'Naruto',
-            'Demon Slayer', 'Jujutsu Kaisen', 'Tokyo Revengers',
-            'Death Note', 'Fullmetal Alchemist', 'Hunter x Hunter',
-            'My Hero Academia', 'Sword Art Online', 'Fairy Tail',
-            'Black Clover', 'Bleach', 'Chainsaw Man',
-        ];
-
-        $mangaData = [
-            ['name' => 'Demon Slayer', 'image' => 'demon_slayer.jpg'],
-            ['name' => 'Jujutsu Kaisen', 'image' => 'jujutsu_kaisen.jpg'],
-            ['name' => 'One Piece', 'image' => 'one_piece.jpg'],
-            ['name' => 'Naruto', 'image' => 'naruto.jpg'],
-            ['name' => 'Tokyo Revengers', 'image' => 'tokyo_revengers.jpg'],
-            ['name' => 'Death Note', 'image' => 'death_note.jpg'],
-            ['name' => 'Fullmetal Alchemist', 'image' => 'fullmetal_alchemist.jpg'],
-            ['name' => 'Hunter x Hunter', 'image' => 'hunter_x_hunter.jpg'],
-            ['name' => 'My Hero Academia', 'image' => 'my_hero_academia.jpg'],
-            ['name' => 'Sword Art Online', 'image' => 'sword_art_online.jpg'],
+        $mangathequeData = [
+            'Shōnen Épique' => [
+                "description" => "Un lieu où l'on revit les batailles épiques des plus grands héros. Chaque étagère raconte une histoire de courage, d'amitié et de dépassement de soi.",
+                "mangas" => [
+                    'L’Attaque des Titans', 'My Hero Academia', 'One Piece', 'Naruto',
+                ],
+            ],
+            'Seinen Dramatique' => [
+                "description" => "Une collection sombre et intense pour les amateurs de récits profonds et réalistes qui explorent les émotions humaines.",
+                "mangas" => [
+                    'Death Note', 'Tokyo Revengers', 'Jujutsu Kaisen', 'Chainsaw Man',
+                ],
+            ],
+            'Fantasy Épique' => [
+                "description" => "Traversez des mondes magiques où dragons, chevaliers et quêtes épiques prennent vie.",
+                "mangas" => [
+                    'Fairy Tail', 'Black Clover', 'Bleach', 'Demon Slayer',
+                ],
+            ],
+            'Horreur et Suspense' => [
+                "description" => "Un espace mystérieux où chaque recoin est rempli de récits qui vous tiendront éveillés toute la nuit.",
+                "mangas" => [
+                    'Chainsaw Man', 'Death Note', 'Jujutsu Kaisen',
+                ],
+            ],
+            'Science-fiction et Cyberpunk' => [
+                "description" => "Un univers futuriste où la technologie et l'imagination ne connaissent pas de limites.",
+                "mangas" => [
+                    'Sword Art Online', 'Hunter x Hunter', 'Fullmetal Alchemist',
+                ],
+            ],
         ];
 
         // Récupérer tous les membres créés par UserFixtures
-        $members = $manager->getRepository(Member::class)->findAll();
+        $members = $manager->getRepository(\App\Entity\Member::class)->findAll();
         if (empty($members)) {
             throw new \Exception("Aucun membre trouvé. Assurez-vous que UserFixtures charge correctement les membres.");
         }
@@ -76,45 +87,52 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
         // Création des Mangashelves
         $mangashelves = [];
         foreach ($members as $member) {
-            $name = $faker->randomElement($mangashelfNames);
             $mangashelf = new Mangashelf();
-            $mangashelf->setName($name . " de " . $member->getName());
+            $mangashelf->setName("Collection de " . $member->getName());
             $mangashelf->setMembre($member);
 
             $manager->persist($mangashelf);
             $mangashelves[] = $mangashelf;
         }
 
-        // Création des Mangathèques
+        // Création des Mangathèques - Chaque membre a une Mangathèque
         $mangatheques = [];
-        foreach ($members as $member) {
-            for ($i = 0; $i < 2; $i++) {
-                $name = $faker->randomElement($mangathequeNames);
-                $mangatheque = new Mangatheque();
-                $mangatheque->setName($name);
-                $mangatheque->setDescription($faker->sentence(8));
-                $mangatheque->setPubliee($faker->boolean(80)); // 80% de chance d’être publiée
-                $mangatheque->setMember($member);
+        foreach ($mangathequeData as $mangathequeName => $data) {
+            $member = $faker->randomElement($members);
+            $mangatheque = new Mangatheque();
+            $mangatheque->setName($mangathequeName);
+            $mangatheque->setDescription($data['description']);
+            $mangatheque->setPubliee($faker->boolean(80));
+            $mangatheque->setMember($member);
 
-                $manager->persist($mangatheque);
-                $mangatheques[] = $mangatheque;
-            }
+            $manager->persist($mangatheque);
+            $mangatheques[$mangathequeName] = $mangatheque;
         }
 
-        // Création des Mangas
-        foreach ($mangaNames as $name) {
+        // Création des Mangas avec images
+        foreach ($imageMapping as $mangaName => $filename) {
             $manga = new Manga();
-            $manga->setName($name);
+            $manga->setName($mangaName);
             $manga->setAuthor($faker->name());
 
-            // Associer chaque Manga à un Mangashelf aléatoire
+            // Associer le Manga à un Mangashelf aléatoire
             $randomMangashelf = $faker->randomElement($mangashelves);
             $manga->setMangashelf($randomMangashelf);
 
-            // Associer chaque Manga à un ou plusieurs Mangathèques aléatoires
-            $randomMangatheques = $faker->randomElements($mangatheques, rand(1, 3));
-            foreach ($randomMangatheques as $mangatheque) {
-                $manga->addMangatheque($mangatheque);
+            // Associer le Manga à une ou plusieurs Mangathèques spécifiques au thème
+            foreach ($mangathequeData as $mangathequeName => $data) {
+                if (in_array($mangaName, $data['mangas'])) {
+                    $manga->addMangatheque($mangatheques[$mangathequeName]);
+                }
+            }
+
+            // Ajouter l'image associée
+            $imageFilePath = $imagePath . '/' . $filename;
+            if (file_exists($imageFilePath)) {
+                $manga->setImageFile(new File($imageFilePath));
+                $manga->setImageName($filename);
+            } else {
+                throw new \Exception("Fichier image non trouvé : $imageFilePath");
             }
 
             $manager->persist($manga);
